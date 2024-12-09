@@ -1,7 +1,8 @@
-databak/testcase_CRM.yaml:
+testcase_CRM.yaml:
 - CRM系统_系统管理_获取销售登录人的部门机构信息
 - CRM系统_系统管理_获取财务登录人的部门机构信息
 - CRM系统_系统管理_获取法务登录人的部门机构信息
+- CRM系统_辅助接口_获取财务登录token
 - CRM系统_系统管理_获取交付登录人的部门机构信息
 - CRM系统_合同管理_销售人员上传合同
 - CRM系统_合同管理_销售人员新建合同保存
@@ -54,22 +55,16 @@ databak/testcase_CRM.yaml:
 - CRM系统_线索管理_释放公海池
 - CRM系统_线索管理_再次领取线索
 - CRM系统_线索管理_线索失效
-databak/testcase_Meet.yaml:
+testcase_Meet.yaml:
 - MEET系统_会务管理_获取登录账号Id
 - MEET系统_会务管理_会议室查询
 - MEET系统_会务管理_账单查询
-databak/testcase_OTD.yaml:
+testcase_MRO.yaml:
+- MRO系统_订单管理_查询订单列表
+testcase_OTD.yaml:
 - OTD系统_订单管理_新增订单yaml
 - OTD系统_订单管理_新增行信息yaml
 - OTD系统_订单管理_校验与匹配yaml
 - OTD系统_订单管理_启动审批yaml
-databak/testcase_SRM.yaml:
+testcase_SRM.yaml:
 - SRM系统_合同管理_技术协议查询yaml
-databak/apply.yaml:
-- CRM系统_报价管理_获取报价申请单号
-- CRM系统_报价管理_报价申请单提交
-databak/test.yaml:
-- CRM系统_报价管理_获取报价申请单号
-- CRM系统_报价管理_报价申请单提交
-databak/testcase_MRO.yaml:
-- MRO系统_订单管理_查询订单列表
