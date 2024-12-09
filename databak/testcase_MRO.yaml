@@ -1,0 +1,32 @@
+- interfaceName: MRO系统_订单管理_查询订单列表
+  module: 订单管理
+  function: 查询订单列表
+  systemName: MRO系统
+  level: critical
+  role: 供应商
+  loop: 1
+  url: /api/mro/mallOrder/third/supply/list
+  method: post
+  body: {
+    "statusArr": [4],
+    "oaOrderCode": "0082024101884628MRO",
+    "warehouseName": "",
+    "sourceOrderDepartment": "",
+    "replyFlag": "",
+    "clientOrderCode": "",
+    "clientMaterialCode": "",
+    "ifFromSupplier": false,
+    "ifNeedPage": true,
+    "pageNum1": 1,
+    "pageSize1": 10,
+    "pageNum": 1,
+    "pageSize": 10
+}
+  #获取返回接口的值
+  save_key: ""
+  #  - $.data.list[0].techNo = techNo #1603089673950240769
+  #将获取的值赋值给字典变量
+  asserts:
+    - $.code == 200
+    - $.message == 操作成功
+    - $.status == 200

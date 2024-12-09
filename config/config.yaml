@@ -1,0 +1,69 @@
+project_crm:
+  account:
+  - 销售:
+      password: 123456abcd
+      username: crmtest
+  - 财务:
+      password: 123456abcde
+      username: lxb001
+  - 法务:
+      password: 123456abcd
+      username: lxb002
+  - 乙方:
+      username: crmtest1111
+      password: 123456abcd
+      header: ''
+  - 客户方:
+      username: crmtest
+      password: 123456abcd
+      header: ''
+  desc: CRM系统
+  host: https://crm-sit.sunwoda.com
+project_meet:
+  account:
+    password: asd123456
+    username: HYT002
+    header: ''
+  desc: MEET系统
+  host: https://meetinguat-app.sunwoda.com
+project_otd:
+  account:
+    password: 123456Aa@@
+    username: 2204010095
+    header: ''
+  desc: OTD系统
+  host: https://iotd-uat02.sunwoda.com
+project_srm:
+  account:
+  - 采购员:
+      password: 55d2abf3278a17f0972a06d5ef84ee07881f3aed
+      username: 2204010095
+      header: ''
+  - 供应商:
+      password: a83dc2781fb1a2aa54e1e548f91ac7db8b8f1bc0
+      username: S10758
+      header: ''
+  desc: SRM系统
+  host: https://srm-uat.sunwoda.com
+project_mro:
+  desc: MRO系统
+  host: https://mro-api-uat.sunwoda.com
+  account:
+  - 采购:
+      username: api_test@163.com
+      password: SCCPapi12!!
+      header: ''
+  - 下单员:
+      username: xiadanyuan@apitest.com
+      password: SCCPapi12!!
+  - 供应商:
+      username: saler@apitest.com
+      password: SCCPapi12!!
+  - 亚德客供应商:
+      username: ydksaler@apitest.com
+      password: Sccp1122!
+      header: ''
+  - SMC供应商:
+      username: smcsaler@apitest.com
+      password: Sccp1122!
+      header: ''

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="RunPython" default="run-python">
+    <!-- 设置Python运行环境 -->
+    <property name="python.executable" location="/usr/local/python3/Python-3.7.9/python" />
+    <!-- 定义一个可执行的Python脚本 -->
+    <property name="python.script" location="start.py" />
+    <!-- 运行Python脚本的任务 -->
+    <target name="run-python">
+        <exec executable="${python.executable}" failonerror="true">
+            <arg value="${python.script}" />
+            <!--  这里可以添加更多的参数或者Python脚本需要的参数 -->
+        </exec>
+    </target>
+</project>

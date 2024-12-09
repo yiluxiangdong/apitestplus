@@ -1,0 +1,1 @@
+nohup java -jar moco-runner-1.5.0-standalone.jar http -p 12306 -c mockserver.json > /dev/null 2>&1 &

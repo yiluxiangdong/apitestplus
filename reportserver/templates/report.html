@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% block content %}
+<body>
+ <div class="TabBox">
+      {% if passrate == "100.00%"%}
+         <p class= "green_summery" >{{msg}}</p><tr></tr>
+     {% else%}
+        <p class= "red_summery" >{{msg}}</p><tr></tr>
+     {% endif%}
+    <table class="data-table"   style="width: 100%;height: 1px;"  border="3">
+      <thead>
+        <tr>
+          <th class="nosort">项目名称</th>
+          <th>模块名称</th>
+          <th>功能菜单</th>
+          <th>接口名称</th>
+          <th>接口路径</th>
+          <th>执行结果</th>
+          <th>接口耗时</th>
+          <th>执行时间</th>
+        </tr>
+      </thead>
+      <tbody>
+       {% for item in data %}
+            <tr>
+              <td>{{item["project"]}}</td>
+              <td>{{item["module"]}}</td>
+              <td>{{item["function"]}}</td>
+              <td>{{item["interface"]}}</td>
+              <td>{{item["api"]}}</td>
+               {% if item["status"] == True %}
+                    <td  class="green-text hoverable" ><p class="tooltip ">成功<span class="tooltiptext">{{item["result"]}}</span></p></td>
+                {% else%}
+                    <td  class="red-text hoverable" ><p class="tooltip ">失败<span class="tooltiptext">{{item["result"]}}</span></p></td>
+                {%endif%}
+              <td>{{item["consumetime"]}}</td>
+              <td>{{item["createtime"]}}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+</div><!--TabBox-->
+</body>
+{% endblock %}
+

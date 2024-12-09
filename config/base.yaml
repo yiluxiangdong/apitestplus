@@ -1,0 +1,179 @@
+MongoDB:
+  desc: MongoDB
+  enable: false
+  host: 192.168.12.79
+  port: 27017
+allure_path:
+  desc: linux环境allure地址
+  path: /usr/local/tools/allure-2.16.0/bin/allure
+byexcel:
+  desc: 是否运行excel用例
+  enable: all
+case_config:
+  desc: 测试用例配置项
+  key:
+    nonrequiredkey:
+    - save_key
+    - body
+    requiredkey:
+    - interfaceName
+    - level
+    - url
+    - method
+    - asserts
+case_path:
+  desc: 测试用例文件目录
+  dir_name: databak
+db_mq:
+  desc: RabbitMQ
+  enable: false
+  host: 192.168.12.79
+  password: '123456'
+  port: 5672
+  username: admin
+db_mysql:
+  charset: utf8
+  database: apitest
+  desc: 测试用例数据库
+  enable: true
+  host: 192.168.12.79
+  password: '123456'
+  port: 3355
+  user: root
+db_redis:
+  desc: redis
+  enable: true
+  host: 192.168.12.79
+  password: '123456'
+  port: 6380
+db_kafka:
+  desc: kafka
+  enable: true
+  host: 192.168.12.79
+  port: 9092
+db_kafka_sit:
+  desc: kafka_sit
+  enable: true
+  host: 172.30.201.150
+  port: 9092
+db_zentao:
+  database: zentao
+  desc: zentao数据库
+  host: 192.168.12.79
+  password: '123456'
+  port: 3305
+  user: zentao
+default:
+  role: 管理员
+get_redis:
+  desc: 是否从redis读取测试结果
+  enable: true
+jenkins_sit:
+  desc: sit环境jenkins打包部署地址
+  password: test#123456
+  url: http://jenkins-uat.sunwoda.com/
+  username: '2204010095'
+mail:
+  desc: 邮箱配置
+  enable: false
+qiwechat:
+  desc: 企业微信发送
+  enable: false
+  url: https://wk.sunwoda.com/mp-cloud-cluster/wecom-hight/qywx/v1/msg/open/send?token=AHcGYfdwRcwooEMdbDHEJNOdoucHZAGK
+project:
+  desc: 需要执行项目
+  system:
+    project_crm:
+      enable: false
+      simplename: crm
+      mail_account:
+        reception: liuxiaobing@sunwoda.com
+        send: liuxiaobing@sunwoda.com
+      name: CRM系统
+      jenkinsJob: CRM-API-test
+      qiwei_account: 2204010095
+      dianlian:
+        X-Encryption-Header: 27f1f90860e94b8facbccdf9bc119fa5
+        url: https://service-sit.sunwoda.com
+    project_meet:
+      enable: false
+      simplename: meet
+      mail_account:
+        reception: liuxiaobing@sunwoda.com
+        send: liuxiaobing@sunwoda.com
+      name: MEET系统
+      jenkinsJob: Meet-API-test
+      qiwei_account: 2204010095
+      dianlian:
+        X-Encryption-Header: c46b9bc98eba4d6ba0d79da2277133e1
+        url: https://service-uat.sunwoda.com
+    project_mro:
+      enable: false
+      simplename: mro
+      mail_account:
+        reception: liuxiaobing@sunwoda.com
+        send: liuxiaobing@sunwoda.com
+      name: MRO系统
+      jenkinsJob: MRO-API-test
+      qiwei_account: 2204010095|2203240012
+      dianlian:
+        X-Encryption-Header: c46b9bc98eba4d6ba0d79da2277133e1
+        url: https://service-uat.sunwoda.com
+    project_otd:
+      enable: false
+      simplename: otd
+      mail_account:
+        reception: liuxiaobing@sunwoda.com
+        send: liuxiaobing@sunwoda.com
+      name: OTD系统
+      jenkinsJob: OTD-API-test
+      qiwei_account: 2204010095|2305150003|2203240012
+      dianlian:
+        X-Encryption-Header: aafdb24427d54695aecd21affef45160
+        url: https://service-uat.sunwoda.com
+    project_srm:
+      enable: false
+      simplename: srm
+      mail_account:
+        reception: liuxiaobing@sunwoda.com
+        send: liuxiaobing@sunwoda.com
+      name: SRM系统
+      jenkinsJob: SRM-API-test
+      qiwei_account: 2204010095
+      dianlian:
+        X-Encryption-Header: 非点链平台
+        url: https://srm-uat.sunwoda.com
+proxies:
+  desc: 代理地址
+  http: http://172.30.7.125:3128
+runallcase:
+  desc: 是否运行全部用例
+  enable: false
+zentao:
+  account:
+  - user:
+      account: liuxiaobing
+      password: 123456
+  desc: 禅道
+  enable: false
+  host: http://zentao.sunwoda.com/
+zentao_test:
+  account:
+  - user:
+      account: admin
+      password: 111111
+  desc: 禅道
+  enable: false
+  host: http://192.168.12.79:8899/
+mk:
+  account:
+  - user:
+      username: 2204010095
+      password: Aa2204010095
+  desc: 流程引擎
+  enable: true
+  host: https://mk-uat.sunwoda.com/web/#/mklogin
+jmx:
+  desc: 压测脚本目录
+  path_win: E:/tools/apache-jmeter-5.4/script
+  path_linux: /usr/local/jmeter5/script

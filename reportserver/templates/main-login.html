@@ -1,0 +1,64 @@
+<!--E:\sunwoda\reportserver\templates\main.html-->
+{% extends "base.html" %}
+{% block content %}
+<!--<head>-->
+<!--  <meta charset="utf-8">-->
+<!--  <title>登录页面</title>-->
+<!--  <link rel="stylesheet" href="path/to/layui/css/layui.css">-->
+<!--</head>-->
+<body>
+
+<div class="layui-container" id="indexaoge">
+  <div class="layui-card" style="width: 300px; margin: 100px auto;">
+       <div  class="layui-row" style="text-align: center;">欣旺达接口自动化测试管理平台</div>
+       <div class="layui-card-body">
+<!--      <form class="layui-form" action="login" method="post">-->
+        <form class="layui-form" >
+        <div class="layui-form-item">
+          <label class="layui-form-label">用户名</label>
+          <div class="layui-input-block">
+            <input type="text" name="username" id="username" required lay-verify="required" placeholder="请输入用户名" autocomplete="off" class="layui-input">
+          </div>
+        </div>
+        <div class="layui-form-item">
+          <label class="layui-form-label">密码</label>
+          <div class="layui-input-block">
+            <input type="password" name="password" id="password" required lay-verify="required" placeholder="请输入密码" autocomplete="off" class="layui-input">
+          </div>
+        </div>
+        <div class="layui-form-item">
+          <div class="layui-input-block">
+            <button type="button" class="layui-btn" lay-submit lay-filter="login" onclick="loginapi()">登录</button>
+<!--              <button type="submit" class="layui-btn" lay-submit lay-filter="login" >登录</button>-->
+          </div>
+        </div>
+<!--      </form>-->
+    </div>
+  </div>
+</div>
+<div id="jwttokendemo"></div>
+<script>
+layui.use(['form'], function(){
+  var form = layui.form;
+
+  // 监听提交事件
+  form.on('submit(login)', function(data){
+    // 在这里处理登录逻辑，例如发送Ajax请求到服务器
+    console.log(data.field); // 打印表单的所有字段
+    // 假设服务器返回的数据为 { code: 0, msg: "登录成功" }
+    var response = { code: 0, msg: "登录成功" };
+
+    // 根据服务器返回的结果进行操作
+    if(response.code === 0){
+      // 登录成功，跳转到主页或其他页面
+      window.location.href = "index.html";
+    } else {
+      // 登录失败，显示错误信息
+      layer.msg(response.msg);
+    }
+    return false; // 阻止表单默认提交事件
+  });
+});
+</script>
+</body>
+{% endblock %}

@@ -1,0 +1,1875 @@
+<!--E:\sunwoda\reportserver\templates\base.html-->
+<!--<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>-->
+<!--<link href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css" rel="stylesheet" />-->
+<!--<script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>-->
+ <!-- 官网jquery压缩版引用地址: -->
+<!-- <script src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.0.0.min.js"></script> -->
+<!-- 百度压缩版引用地址: -->
+<!-- <script src="http://libs.baidu.com/jquery/2.1.4/jquery.min.js"></script> -->
+<!-- 微软压缩版引用地址: -->
+<!-- <script src="http://ajax.aspnetcdn.com/ajax/jquery/jquery-2.1.4.min.js"></script> -->
+<!-- <script type="text/javascript"  src="..//static/js/jquery.js"></script>
+<script type="text/javascript" src="{{ url_for('static', filename='js/jquery.js') }}"></script> -->
+<!--  <script   src="{{ url_for('static', filename='js/jquery.min.js') }}"></script>-->
+<!-- <script src="..//static/js/jquery.min.js"></script> -->
+<!-- <script src="{{ url_for('static', filename='js/jquery.dataTables.min.js') }}"></script>
+<link href="{{ url_for('static', filename='css/jquery.dataTables.min.css') }}" rel="stylesheet"> -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.25/css/jquery.dataTables.css">
+<script type="text/javascript" src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script>
+<link type="text/css" href="https://www.layuicdn.com/layui/css/layui.css" />
+<script src="https://www.layuicdn.com/layui/layui.js"></script>
+
+<!-- <script src="{{ url_for('static', filename='js/layui.js') }}"></script>
+<link href="{{ url_for('static', filename='css/layui.css') }}" rel="stylesheet">
+<link href="{{ url_for('static', filename='css/jqpagination.css') }}" rel="stylesheet">
+<script src="{{ url_for('static', filename='js/jqpagination.js') }}"></script>
+<script src="{{ url_for('static', filename='js/dataTables.editor.min.js') }}"></script>
+ -->
+
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>欣旺达自动化测试平台</title>
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- <link rel="icon" href="{{ url_for('static', filename='images/logo.svg') }}" type="image/svg"> -->
+  <link rel="shortcut icon" href="../static/image/swd.png" type="image/png">
+ <!-- <link rel="icon" href="/usr/local/project/api_test/reportserver/static/image/swd.png" type="image/png"> -->
+ <link href="//unpkg.com/layui@2.9.14/dist/css/layui.css" rel="stylesheet">
+
+ 
+</head>
+<style>
+
+    input::placeholder {
+        color: #909090; /* 浅灰色 */
+        opacity: 0.5; /* 设置透明度为50% */
+    }
+    .required-star {
+            color: red;
+        }
+    textarea::placeholder {
+        color: #909090; /* 浅灰色 */
+        opacity: 0.5; /* 设置透明度为50% */
+    }
+
+    .overlay {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0, 0, 0, 0.5);
+        justify-content: center;
+        align-items: center;
+    }
+
+    .loader {
+        border: 5px solid #f3f3f3;
+        border-top: 5px solid #3498db;
+        border-radius: 50%;
+        width: 50px;
+        height: 50px;
+        animation: spin 2s linear infinite;
+    }
+
+    @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+    }
+
+     .hoverable {
+            background-color: #ccc;
+            transition: all 0.3s ease; /* 添加动画效果  修改分页设置 jquery.dataTables.min.js   aLengthMenu:[10,15,50,100] */
+        }
+    .hoverable:hover {
+        background-color: #f90; /* 当鼠标悬停时改变背景色为红色 */
+        transform: scale(1.1); /* 放大元素 */
+    }
+
+    .tooltip {
+          position: relative;
+          display: inline-block;
+        }
+
+    .tooltip .tooltiptext {
+      visibility: hidden;
+      width: 520px;
+      background-color: #555;
+      color: #fff;
+      text-align: left;
+      border-radius: 6px;
+      padding: 5px 0;
+      position: absolute;
+      z-index: 1;
+      bottom: 100%;
+      left: 50%;
+      margin-left: -60px;
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+
+    .tooltip:hover .tooltiptext {
+      visibility: visible;
+      opacity: 1;
+    }
+
+    .green-text {
+      color: green;
+      font-size: 10px;
+      font-weight: bold;
+    }
+      .red-text {
+      color: red;
+      font-size: 10px;
+      font-weight: bold;
+    }
+      .yellow-text {
+      color: yellow;
+      font-size: 10px;
+      font-weight: bold;
+    }
+
+
+     .font {
+        font-size: 10px;
+     }
+     .red_summery {
+        font-size: 15px;
+        color: red;
+        text-align: center;
+        font-weight: bold;
+     }
+     .green_summery {
+        font-size: 15px;
+        color: green;
+        text-align: center;
+        font-weight: bold;
+     }
+     .my-table {
+          height: 200px;
+          width: 500px;
+        }
+      .button-container button {
+         display: inline-block;
+          float: left;
+          margin-right: 1px;
+    }
+      .forms-container {
+        display: flex;
+        margin-right:30px;
+       /* justify-content: space-between;   均匀分布forms之间的空间 */
+        align-items: center; /* 垂直居中，如果需要的话 */
+    }
+      hr {
+            border: none; /* 移除默认的边框 */
+            height: 2px; /* 设置高度 */
+            background-color: #333; /* 设置背景颜色，即分割线的颜色 */
+            margin: 20px 0; /* 设置分割线上下的外边距 */
+        }
+
+    td{
+          text-align: center;
+          vertical-align: middle;
+        }
+
+    table{
+        width: 100%;height: 1px;
+        width: auto;      /* 确保表格宽度自适应 */
+        margin: 0 auto;   /* 水平居中 */
+        font-family: arial, sans-serif;
+        border-collapse: collapse;
+       <!--width: 50%;-->
+        }
+     th {
+
+
+    }
+
+td, th {
+    border: 1px solid #dddddd;
+    <!-- text-align: left;-->
+    text-align: center;
+    padding: 8px;
+}
+
+   .tab-content {
+            display: none;
+            padding: 20px;
+            border: 1px solid #ccc;
+        }
+        .tab-content.active {
+            display: block;
+        }
+    textarea {
+        width: 100%;
+        height: 100%;
+        border: none; /* 移除边框 */
+        padding: 10px; /* 添加内边距 */
+        box-sizing: border-box; /* 确保宽度和高度包括内边距和边框 */
+        font-size: 16px; /* 设置字体大小 */
+        resize: none; /* 禁止用户调整大小 */
+    }
+
+    .left-align-table th,
+    .left-align-table td {
+        text-align: left; /* 设置文本左对齐 */
+    }
+
+    .black-border-table {
+        border-collapse: collapse; /* 合并相邻的边框 */
+        width: 100%; /* 可选：设置表格宽度为100% */
+    }
+
+    .black-border-table th,
+    .black-border-table td {
+        border: 1px solid black; /* 设置边框为1像素宽，实线，黑色 */
+    }
+    /* 接口等待蒙层示例 */
+    .overlay {
+        position: fixed; /* Stay in place */
+        z-index: 1; /* Sit on top */
+        padding-top: 100px; /* Location of the box */
+        left: 0;
+        top: 0;
+        width: 100%; /* Full width */
+        height: 100%; /* Full height */
+        overflow: auto; /* Enable scroll if needed */
+        background-color: rgb(0,0,0); /* Fallback color */
+        background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+    }
+
+    .overlay-content {
+        position: relative;
+        top: 25%; /* 25% from the top */
+        width: 100%; /* 100% width */
+        text-align: center; /* Centered text */
+        margin-top: 30px; /* 30px top margin */
+    }
+
+    /* Optional: Add animation to the overlay */
+    .overlay {
+        animation: fadeIn 0.5s;
+    }
+
+    @keyframes fadeIn {
+        from {opacity: 0;}
+        to {opacity: 1;}
+    }
+</style>
+<body>
+    {% block content %}{% endblock %}
+</body>
+<script>
+var tableType = {
+        "language": {
+        "sSearch": "搜索:",
+        "sInfoFiltered": "(由 _MAX_ 项结果过滤)",
+        "sInfoPostFix":  "",
+        "oPaginate": {
+           "sFirst": "首页",
+           "sPrevious": "上页",
+           "sNext": "下页",
+           "sLast": "末页"
+          },
+          "sEmptyTable": "表中数据为空",
+          "sInfo": "显示第 _START_ 至 _END_ 项结果，共 _TOTAL_ 项",
+          "sLengthMenu": "显示 _MENU_ 项结果"
+        }
+    }
+
+<!--退出-->
+$(document).ready(function() {
+    $('#logout').click(function(e) {
+        // 阻止<a>标签的默认行为（即导航到href所指向的URL）
+        e.preventDefault();
+        // 发送AJAX请求
+        $.ajax({
+            url: '/api/index', // 替换为你的接口URL
+            type: 'GET', // 替换为适当的HTTP方法（GET, POST等）
+            success: function(data) {
+                // 在这里处理请求成功后的响应
+                 var div = document.getElementById('#mytest');
+                 div.style.display = 'none';
+                 $('#reponsetext').text(data); // 假设接口返回纯文本，将其显示在#response元素中
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                // 在这里处理请求失败的情况
+                console.error('AJAX请求失败:', textStatus, errorThrown);
+            }
+        });
+    });
+});
+
+
+//<!-- 页面框架部分 -->
+$(document).ready(function(){
+    $('.data-table').DataTable(tableType);
+});
+
+<!-- 菜单切换-->
+function switchTab(tabId,content='') {
+       // 移除所有tab内容的active类
+    var tabContents = $('.tab-content');
+    for (var i = 0; i < tabContents.length; i++) {
+        tabContents[i].classList.remove('active');
+    }
+
+    // 为选中的tab内容添加active类
+    var selectedTab = document.getElementById(tabId);
+    if (selectedTab) {
+        selectedTab.classList.add('active');
+    }
+    if(tabId === 'upload5'){
+       <!--显示用例-->
+       getcassedetaill(content)
+    }else if(tabId === 'upload6'){
+       <!--运行所选文件中的用例-->
+         runcasebyfile(content);
+    }else if(tabId === 'upload3'){
+       <!--展示api用例-->
+         getapidetaill();
+    }else if(tabId === 'upload7'){
+       <!--添加用例-->
+       <!-- 文件名部分-->
+       var filename = document.getElementById('filenames');
+       if(content==""){
+         var inputContent = document.getElementById('casefiles').value;
+         filename.value = inputContent;
+        }else{
+          filename.value = content;
+       }
+    }else if(tabId === 'upload9'){
+       <!--查看构建详情-->
+       getbuilddetaill(content)
+    }else if(tabId === 'upload'){
+       <!--返回-->
+       location.reload();
+    }else  if(tabId === 'upload10'){
+        <!--显示用例配置-->
+        <!--重写用例配置部分-->
+        getcaseconf();
+    }else if(tabId === 'upload11'){
+       <!--显示运行配置-->
+       gettestconf();
+    }else if(tabId === 'upload13'){
+       <!--显示指定服务的运行结果-->
+       selectcase(content)
+    }else if(tabId === 'upload14'){
+       <!--显示操作记录-->
+       getrecodes();
+    }else if(tabId === 'upload10_1'){
+       <!--显示操作记录-->
+       updateaccount(content);
+    }else if(tabId === 'upload18'){
+       <!--获取备份文件信息-->
+       getbackfileinfo();
+    }else if(tabId === 'upload15'){
+       <!--获压测份文件信息-->
+       getjmxfileinfo();
+    }
+
+}
+
+
+<!--获取api信息-->
+function getapidetaill(){
+       $.ajax({
+          url: 'getapi', // 服务器端点
+          type: 'POST', // 请求方法类型
+          dataType: 'json',             // 预期服务器返回的数据类型
+          contentType: 'application/json',
+          success: function(response) {
+            $('#dataTable11').DataTable().destroy();
+             var element2 = document.getElementById('dataTable11');
+             if(element2){
+                $('#dataTable11 tbody').empty();
+                var data = response['API'];
+                $.each(data, function(index, item) {
+                    var row = $('<tr></tr>');
+                    row.append($('<td></td>').text(index+1));
+                    row.append($('<td></td>').text(item.desc));
+                    row.append($('<td></td>').text(item.name));
+                    row.append($('<td></td>').text('接口测试'));
+                    row.append($('<td></td>').text(item.count));
+                    row.append($('<td style="width: 20% "></td>').append($('<div class="layui-btn-group" align="left"><form style="display: inline-block;float:left"><button type="button" class="layui-btn layui-btn-fluid" onclick="switchTab(\'upload13\',\''+item.name+'\')" title="选择用例"><i class="layui-icon layui-icon-radio"></i></button></form><form  style="display: inline-block;float:left"><button    class="layui-btn layui-btn-fluid" onclick="showConfirm(\'buildfileall\',\''+item.name+'\')" title="构建全部"><i class="layui-icon layui-icon-engine"></i></button></form><form  style="display: inline-block;float:left"><button    class="layui-btn layui-btn-fluid" onclick="showConfirm(\'buildfile\',\''+item.name+'\')" title="构建所选用例"><i class="layui-icon layui-icon-util"></i></button></form><form  style="display: inline-block;float:left"><button    class="layui-btn layui-btn-fluid"><a href="http://apitest.sunwoda.com/'+item.name+'/allure-report">查看<i class="layui-icon layui-icon-link"></i></a></button></form></div>')));
+                    <!-- row.append($('<td style="width: 20% "></td>').append($('<div class="layui-btn-group layui-row" style="display: flex;" align="left"><button class="layui-btn layui-btn-fluid" onclick="switchTab(\'upload13\',\''+item.name+'\')" title="选择用例"><i class="layui-icon layui-icon-radio"></i></button><button class="layui-btn layui-btn-fluid" onclick="showConfirm(\'buildfileall\',\''+item.name+'\')" title="构建全部"><i class="layui-icon layui-icon-engine"></i></button><button class="layui-btn layui-btn-fluid" onclick="showConfirm(\'buildfile\',\''+item.name+'\')" title="构建所选用例"><i class="layui-icon layui-icon-util"></i></button><button class="layui-btn layui-btn-fluid"><a >查看<i class="layui-icon layui-icon-link"></i></a></button></div>')));-->
+                    $('#dataTable11 tbody').append(row);
+                });
+                $('#dataTable11').DataTable(tableType);
+                var overlay = document.getElementById('loadingOverlay');
+                overlay.style.display = 'none';
+
+              }else{
+                    alert(JSON.stringify(response))
+              }
+         }
+      });
+}
+
+ 
+<!--删除压测文件-->
+function getjmxfileinfo(){
+       $.ajax({
+          url: 'getjmxfileinfos', // 服务器端点
+          type: 'POST', // 请求方法类型
+          dataType: 'json',             // 预期服务器返回的数据类型
+          contentType: 'application/json',
+          success: function(response) {
+            $('#dataTable10').DataTable().destroy();
+             var element2 = document.getElementById('dataTable10');
+             if(element2){
+                $('#dataTable10 tbody').empty();
+                var data = response['stress_testfile'];
+                $.each(data, function(index, item) {
+                    var row = $('<tr></tr>');
+                    row.append($('<td></td>').text(index+1));
+                    row.append($('<td></td>').text(item.filename));
+                    row.append($('<td></td>').text(item.filesize));
+                    row.append($('<td></td>').text('压测文件'));
+                    row.append($('<td></td>').text(item.createTime));
+                    row.append($('<td></td>').text(item.lastaccesstime));
+                   <!--row.append($('<td ></td>').append($('<div class="layui-btn-group" align="left"><form action="downfilejmx/'+item.filename+'" method=get enctype=multipart/form-data style="display: inline-block;float:left"><button   class="layui-btn layui-btn-fluid" title="下载" ><i class="layui-icon layui-icon-download-circle"></i></button></form><button  class="layui-btn layui-btn-fluid" onclick=showConfirm(\'delfilejmxsfile\',\''+item.filename+'\') title="删除" ><i class="layui-icon layui-icon-delete"></i></button></div>')));-->
+                   <!--row.append($('<td ></td>').append($('<div class="layui-btn-group" ><form action="downfilejmx/'+item.filename+'"  method=get enctype=multipart/form-data style="float:left;width: 50%;" ><button  class="layui-btn layui-btn-fluid" title="下载"  ><i class="layui-icon layui-icon-download-circle"></i></button></form><button   class="layui-btn layui-btn-fluid" style="float:left;width: 50%;" onclick=showConfirm(\'delfilejmxsfile\',\''+item.filename+'\') title="删除" ><i class="layui-icon layui-icon-delete"></i></button></div>')));-->
+                    row.append($('<td ></td>').append($('<div class="layui-btn-group" ><form action="downfilejmx/'+item.filename+'"  method=get enctype=multipart/form-data style="float:left;width: 50%;" ><button  style="display:none" class="layui-btn layui-btn-fluid" title="下载"  ><i class="layui-icon layui-icon-download-circle"></i></button></form><button   class="layui-btn layui-btn-fluid" style="float:left;width: 50%;" onclick=showConfirm(\'delfilejmxsfile\',\''+item.filename+'\') title="删除" ><i class="layui-icon layui-icon-delete"></i></button></div>')));
+
+                    $('#dataTable10 tbody').append(row);
+                });
+                $('#dataTable10').DataTable(tableType);
+                var overlay = document.getElementById('loadingOverlay');
+                overlay.style.display = 'none';
+              }else{
+                    alert(JSON.stringify(response))
+              }
+         }
+      });
+}
+
+<!--删除压测文件-->
+function delfilejmxsfile(filename){
+       $.ajax({
+          url: 'delfilejmxsfiles', // 服务器端点
+          type: 'POST', // 请求方法类型
+          dataType: 'json',             // 预期服务器返回的数据类型
+          data: JSON.stringify({"filename":filename}), // 要发送的数据
+          contentType: 'application/json',
+          success: function(response) {
+              console.log(response)
+              getjmxfileinfo();
+         }
+      });
+}
+
+
+
+function getbackfileinfo(){
+       $.ajax({
+          url: 'getbackfileinfos', // 服务器端点
+          type: 'POST', // 请求方法类型
+          dataType: 'json',             // 预期服务器返回的数据类型
+          contentType: 'application/json',
+          success: function(response) {
+            $('#dataTable9').DataTable().destroy();
+             var element2 = document.getElementById('dataTable9');
+             if(element2){
+                $('#dataTable9 tbody').empty();
+                var data = response['backfile'];
+                $.each(data, function(index, item) {
+                    var row = $('<tr></tr>');
+                    row.append($('<td></td>').text(index+1));
+                    row.append($('<td></td>').text(item.filename));
+                    row.append($('<td></td>').text(item.filesize));
+                    row.append($('<td></td>').text('备份文件'));
+                    row.append($('<td></td>').text(item.createTime));
+                    row.append($('<td></td>').text(item.lastaccesstime));
+                    row.append($('<td ></td>').append($('<button class="layui-btn  layui-btn-sm" lay-on="alert" onclick=showConfirm(\'delfilebacks\',\''+item.filename+'\')><i class="layui-icon layui-icon-delete"></i></button>')));
+                    $('#dataTable9 tbody').append(row);
+                });
+                $('#dataTable9').DataTable(tableType);
+                var overlay = document.getElementById('loadingOverlay');
+                overlay.style.display = 'none';
+              }else{
+                    alert(JSON.stringify(response))
+              }
+         }
+      });
+}
+
+
+<!--删除备份文件-->
+function delfilebacksfile(filename){
+       $.ajax({
+          url: 'delfileback', // 服务器端点
+          type: 'POST', // 请求方法类型
+          dataType: 'json',             // 预期服务器返回的数据类型
+          data: JSON.stringify({"filename":filename}), // 要发送的数据
+          contentType: 'application/json',
+          success: function(response) {
+              console.log(response)
+              getbackfileinfo();
+         }
+      });
+}
+
+
+<!--运行文件-->
+function runcasebyfile(filename){
+	   alert(filename+'测试文件已执行，请登录jenkins查看')
+       $.ajax({
+          url: 'runcasebyfile', // 服务器端点
+          type: 'POST', // 请求方法类型
+          dataType: 'json',             // 预期服务器返回的数据类型
+          data: JSON.stringify({"filename":filename}), // 要发送的数据
+          contentType: 'application/json',
+          success: function(response) {
+          console.log(response)
+         }
+      });
+}
+ 
+function getcassedetaill(filepath){
+       $.ajax({
+          url: 'getcassedetaills', // 服务器端点
+          type: 'POST', // 请求方法类型
+          dataType: 'json',             // 预期服务器返回的数据类型
+          data: JSON.stringify({"filepath":filepath}), // 要发送的数据
+          contentType: 'application/json',
+          success: function(response) {
+            $('#dataTable7').DataTable().destroy();
+             var element2 = document.getElementById('dataTable7');
+             if(element2){
+                $('#dataTable7 tbody').empty();
+                var data =  response['content'];
+                $.each(data, function(index, item) {
+                    var row = $('<tr></tr>');
+                    row.append($('<td></td>').text(index+1));
+                    row.append($('<td></td>').text(item.systemName));
+                    row.append($('<td></td>').text(item.interfaceName));
+                    row.append($('<td></td>').text(item.module));
+                    row.append($('<td></td>').text(item.function));
+                    row.append($('<td></td>').text(item.level));
+                    row.append($('<td></td>').text(item.role));
+                    row.append($('<td></td>').text(item.loop));
+                    row.append($('<td></td>').text(item.url));
+                    row.append($('<td></td>').text(item.method));
+                    var content = JSON.stringify(item.body)
+                    row.append($('<td ></td>').append($('<button class="layui-btn  layui-btn-sm" lay-on="alert" onclick=getcaseinfo('+content+')><i class="layui-icon layui-icon-eye"></i></button>')));
+                    row.append($('<td></td>').text(JSON.stringify(item.save_key)));
+                    row.append($('<td></td>').text(JSON.stringify(item.asserts)));
+                    var systemnames = document.getElementById('systemnames');
+                    systemnames.innerHTML = item.systemName
+                    $('#dataTable7 tbody').append(row);
+                });
+
+                $('#dataTable7').DataTable(tableType);
+                var overlay = document.getElementById('loadingOverlay');
+                overlay.style.display = 'none';
+                var casefiles = document.getElementById('casefiles');
+                casefiles.innerHTML = response['filename']
+
+              }else{
+                    alert(JSON.stringify(response))
+              }
+         }
+      });
+}
+
+function getcaseinfo(data){
+   layui.use(function(){
+      var layer = layui.layer;
+      var util = layui.util;
+      // 批量事件
+      util.on('lay-on', {
+        alert: function(){
+          layer.alert(JSON.stringify(data));
+        }
+      });
+    });
+}
+
+<!--展示运行配置信息-->
+function gettestconf(){
+       $.ajax({
+          url: 'getproconfig', // 服务器端点
+          type: 'POST', // 请求方法类型
+          dataType: 'json',             // 预期服务器返回的数据类型
+          success: function(response) {
+            $('#dataTable8').DataTable().destroy();
+             var element2 = document.getElementById('dataTable8');
+             if(element2){
+                $('#dataTable8 tbody').empty();
+                var data = response;
+                $.each(data, function(index, item) {
+                    var row = $('<tr></tr>');
+                    row.append($('<td></td>').text(index+1));
+                    row.append($('<td></td>').text(item.items));
+                    row.append($('<td></td>').text(item.desc));
+                    row.append($('<td></td>').text(JSON.stringify(item.value)));
+                    var items = item.items
+                    var content = item.desc
+                    var value = JSON.stringify(item.value)
+                    row.append($('<td></td>').append($('<button class="layui-btn layui-btn-fluid" title="编辑配置" lay-on="test-page-custom" onclick=editconfig(\''+items+'\',\''+content+'\',\''+value+'\')><i class="layui-icon layui-icon-edit"></i></button>')));
+                    $('#dataTable8 tbody').append(row);
+                });
+                $('#dataTable8').DataTable(tableType);
+                var overlay = document.getElementById('loadingOverlay');
+                overlay.style.display = 'none';
+              }else{
+                    alert(JSON.stringify(response))
+              }
+         }
+      });
+}
+
+<!--修改配置项-->
+function editconfig(items,content,detaill){
+    layui.use(function(){
+          var $ = layui.$;
+          var layer = layui.layer;
+          var util = layui.util;
+          var form = layui.form;
+          // 事件
+          util.on('lay-on', {
+            'test-page-custom': function(){
+              var index = layer.open({
+                type: 1,
+                area: '350px',
+                resize: false,
+                shadeClose: true,
+                title: '修改： '+content,
+                content: `
+                  <div class="layui-form" lay-filter="filter-test-layer" style="margin: 16px;">
+                        <div class="demo-login-container">
+                                 <div class="layui-form-item">
+                                    <div class="layui-input-wrap">
+                                      <div class="layui-input-prefix"></div>
+                                      <input type="text" name="detail"  id="detail" value="" lay-verify="required" placeholder="配置详情" lay-reqtext="请填配置详情" autocomplete="off" class="layui-input" lay-affix="clear">
+                                    </div>
+                              </div>
+                              <div class="layui-form-item">
+                                <button class="layui-btn layui-btn-fluid" lay-submit lay-filter="demo-login">提交</button>
+                              </div>
+                        </div>
+                  </div>
+                `,
+                success: function(){
+                    $(document).ready(function(){
+                      $('#detail').val(detaill);
+                    });
+                 // 对弹层中的表单进行初始化渲染
+                  form.render();
+                  // 表单提交事件
+                  form.on('submit(demo-login)', function(data){
+                    var field = data.field; // 获取表单字段值
+                    // 显示填写结果，仅作演示用
+                    <!-- layer.alert(JSON.stringify(field), {-->
+                    <!-- title: '当前填写的字段值'-->
+                    <!--});-->
+                    //关闭弹窗
+                    updatecaseconf(items,JSON.stringify(field))
+                    layer.close(index)
+
+                    // 此处可执行 Ajax 等操作
+                    // …
+                    return false; // 阻止默认 form 跳转
+                  });
+                }
+              });
+            }
+          })
+        });
+    }
+
+
+
+<!--修改运行配置信息-->
+function updatecaseconf(items,data){
+    $.ajax({
+          url: "updateconf", // 服务器端点
+          type: 'POST', // 请求方法类型
+          data: JSON.stringify({"items":items,"content":data}), // 要发送的数据
+          contentType: 'application/json',
+          dataType: 'json',             // 预期服务器返回的数据类型
+          success: function(response) {
+             console.log(response);
+             gettestconf()
+         }
+      });
+}
+
+<!--新增配置项-->
+function addconfig(){
+     layui.use(function(){
+          var $ = layui.$;
+          var layer = layui.layer;
+          var util = layui.util;
+          var form = layui.form;
+          // 事件
+          util.on('lay-on', {
+            'test-page-custom-1': function(){
+              var index = layer.open({
+                type: 1,
+                area: '350px',
+                resize: false,
+                shadeClose: true,
+                title: '新增配置项',
+                content: `
+                  <div class="layui-form" lay-filter="filter-test-layer" style="margin: 16px;">
+                        <div class="demo-login-container">
+                                 <div class="layui-form-item">
+                                    <div class="layui-input-wrap">
+                                      <div class="layui-input-prefix"></div>
+                                      <input type="text" name="additems"  id="additems" value="" lay-verify="required" placeholder="配置项目 如：byexcel" lay-reqtext="配置项目" autocomplete="off" class="layui-input" lay-affix="clear">
+                                    </div>
+                                 </div>
+<!--                                 <div class="layui-form-item">-->
+<!--                                      <div class="layui-input-wrap">-->
+<!--                                      <div class="layui-input-prefix"></div>-->
+<!--                                      <input type="text" name="adddesc"  id="adddesc" value="" lay-verify="required" placeholder="配置描述 如：是否运行excel用例" lay-reqtext="配置描述" autocomplete="off" class="layui-input" lay-affix="clear">-->
+<!--                                    </div>-->
+<!--                                 </div>-->
+                                 <div class="layui-form-item">
+                                      <div class="layui-input-wrap">
+                                      <div class="layui-input-prefix"></div>
+                                      <input type="text" name="adddetail"  id="adddetail" value="" lay-verify="required" placeholder="配置详情 如：{desc:是否运行excel用例,enable:all}" lay-reqtext="配置详情" autocomplete="off" class="layui-input" lay-affix="clear">
+                                    </div>
+                              </div>
+                              <div class="layui-form-item">
+                                <button class="layui-btn layui-btn-fluid" lay-submit lay-filter="demo-login">提交</button>
+                              </div>
+                        </div>
+                  </div>
+                `,
+                success: function(){
+                 // 对弹层中的表单进行初始化渲染
+                  form.render();
+                  // 表单提交事件
+                  form.on('submit(demo-login)', function(data){
+                    var field = data.field; // 获取表单字段值
+                    // 显示填写结果，仅作演示用
+                    <!-- layer.alert(JSON.stringify(field), {-->
+                    <!-- title: '当前填写的字段值'-->
+                    <!--});-->
+                    //关闭弹窗
+                    //alert(JSON.stringify(field))
+                    addconfigitem(JSON.stringify(field))
+                    layer.close(index)
+
+                    // 此处可执行 Ajax 等操作
+                    // …
+                    return false; // 阻止默认 form 跳转
+                  });
+                }
+              });
+            }
+          })
+        });
+    }
+
+
+function addconfigitem(data){
+    $.ajax({
+          url: "addconfigitems", // 服务器端点
+          type: 'POST', // 请求方法类型
+          data: JSON.stringify({"data":data}), // 要发送的数据
+          contentType: 'application/json',
+          dataType: 'json',             // 预期服务器返回的数据类型
+          success: function(response) {
+             console.log(response);
+             gettestconf()
+         }
+      });
+}
+
+
+function getcaseconf(){
+       $.ajax({
+          url: 'getconfig', // 服务器端点
+          type: 'POST', // 请求方法类型
+          dataType: 'json',             // 预期服务器返回的数据类型
+          success: function(response) {
+            $('#dataTable5').DataTable().destroy();
+             var element2 = document.getElementById('dataTable5');
+                 if(element2){
+                    $('#dataTable5 tbody').empty();
+                    var data = response['content'];
+                    $.each(data, function(index, item) {
+                        var row = $('<tr></tr>');
+                        row.append($('<td></td>').text(index+1));
+                        row.append($('<td></td>').text(item.projectName));
+                        row.append($('<td></td>').text(item.host));
+                        row.append($('<td></td>').text(item.desc));
+						row.append($('<td></td>').text(item.role));
+                        row.append($('<td></td>').text(item.username));
+                        row.append($('<td></td>').text(item.password));
+                        content = JSON.stringify({"username":item.username,"password":item.password})
+                       <!--row.append($('<td></td>').append($('<button class="layui-btn layui-btn-fluid" title="编辑" onclick=switchTab("upload10_1",'+item.projectName+')><i class="layui-icon layui-icon-edit"></i></button>')));-->
+                        row.append($('<td></td>').append($('<button class="layui-btn layui-btn-fluid" title="编辑" lay-on="test-page-custom-2" onclick=addaccount(\''+item.projectName+'\',\''+content+'\',\''+item.role+'\')><i class="layui-icon layui-icon-edit"></i></button>')));
+                        $('#dataTable5 tbody').append(row);
+                    });
+                    $('#dataTable5').DataTable(tableType);
+                    var overlay = document.getElementById('loadingOverlay');
+                    overlay.style.display = 'none';
+                    }else{
+                        alert(JSON.stringify(response))
+                    }
+          }
+      });
+}
+
+
+
+
+<!--修改账号信息-->
+function addaccount(project,account,host){
+     layui.use(function(){
+          var $ = layui.$;
+          var layer = layui.layer;
+          var util = layui.util;
+          var form = layui.form;
+          // 事件
+          util.on('lay-on', {
+            'test-page-custom-2': function(){
+              var index = layer.open({
+                type: 1,
+                area: '300px',
+                resize: false,
+                shadeClose: true,
+                title: '修改账号信息',
+                content: `
+                  <div class="layui-form" lay-filter="filter-test-layer" style="margin: 16px;">
+                        <div class="demo-login-container">
+                               工程名称：<div class="layui-form-item">
+                                    <div class="layui-input-wrap">
+                                      <div class="layui-input-prefix"></div>
+                                      <input type="text" name="projectName"  id="projectName" value="" lay-verify="required" placeholder="工程名称：projet_crm" lay-reqtext="工程名称" autocomplete="off" class="layui-input" lay-affix="clear" disabled>
+                                    </div>
+                                 </div>
+
+                                 角色：<div class="layui-form-item">
+                                    <div class="layui-input-wrap">
+                                      <div class="layui-input-prefix"></div>
+                                      <input type="text" name="roles"  id="roles" value="" lay-verify="required" placeholder="角色：https://crm-sit.sunwoda.com" lay-reqtext="角色" autocomplete="off" class="layui-input" lay-affix="clear" disabled>
+                                    </div>
+                                 </div>
+                                 用户名：<div class="layui-form-item">
+                                    <div class="layui-input-wrap">
+                                      <div class="layui-input-prefix"></div>
+                                      <input type="text" name="username"  id="username" value="" lay-verify="required" placeholder="用户名" lay-reqtext="用户名" autocomplete="off" class="layui-input" lay-affix="clear">
+                                    </div>
+                                 </div>
+
+								密码：<div class="layui-form-item">
+                                    <div class="layui-input-wrap">
+                                      <div class="layui-input-prefix"></div>
+                                      <input type="text" name="password"  id="password" value="" lay-verify="required" placeholder="密码" lay-reqtext="密码" autocomplete="off" class="layui-input" lay-affix="clear">
+                                    </div>
+                                 </div>
+
+
+                              </div>
+                              <div class="layui-form-item">
+                                <button class="layui-btn layui-btn-fluid" lay-submit lay-filter="demo-login">提交</button>
+                              </div>
+                        </div>
+                  </div>
+                `,
+                success: function(){
+                 // 对弹层中的表单进行初始化渲染
+                  form.render();
+                    $(document).ready(function(){
+                      $('#username').val(JSON.parse(account)["username"]);
+					  $('#password').val(JSON.parse(account)["password"]);
+                      $('#roles').val(host);
+                      $('#projectName').val(project);
+                    });
+                  // 表单提交事件
+                  form.on('submit(demo-login)', function(data){
+                    var field = data.field; // 获取表单字段值
+                    // 显示填写结果，仅作演示用
+                    <!-- layer.alert(JSON.stringify(field), {-->
+                    <!-- title: '当前填写的字段值'-->
+                    <!--});-->
+                    //关闭弹窗
+					location.reload();
+                    updatecasecount(JSON.stringify(field))
+                    layer.close(index)
+                    var overlay = document.getElementById('loadingOverlay');
+                    overlay.style.display = 'none';
+                    // 此处可执行 Ajax 等操作
+                    // …
+                    return false; // 阻止默认 form 跳转
+                  });
+                }
+              });
+            }
+          })
+        });
+    }
+
+
+<!--修改账号信息-->
+function updatecasecount(data){
+      $.ajax({
+          url: "updatecasecounts", // 服务器端点
+          type: 'POST', // 请求方法类型
+          data: JSON.stringify({"data":data}), // 要发送的数据
+          contentType: 'application/json',
+          dataType: 'json',             // 预期服务器返回的数据类型
+          success: function(response) {
+             console.log(response);
+             getcaseconf()
+         }
+      });
+}
+<!--新增账号信息-->
+
+function addaccountinfo(){
+     layui.use(function(){
+          var $ = layui.$;
+          var layer = layui.layer;
+          var util = layui.util;
+          var form = layui.form;
+          // 事件
+          util.on('lay-on', {
+            'test-page-custom-3': function(){
+              var index = layer.open({
+                type: 1,
+                area: '350px',
+                resize: false,
+                shadeClose: true,
+                title: '修改账号信息',
+                content: `
+                  <div class="layui-form" lay-filter="filter-test-layer" style="margin: 16px;">
+                        <div class="demo-login-container">
+                               <div class="layui-form-item">
+                                    <div class="layui-input-wrap">
+                                      <div class="layui-input-prefix"></div>
+                                      <input type="text" name="addprojectName"  id="addprojectName" value="" lay-verify="required" placeholder="工程名称：projet_crm" lay-reqtext="工程名称" autocomplete="off" class="layui-input" lay-affix="clear">
+                                    </div>
+                                 </div>
+
+                                 <div class="layui-form-item">
+                                    <div class="layui-input-wrap">
+                                      <div class="layui-input-prefix"></div>
+                                      <input type="text" name="addhost"  id="addhost" value="" lay-verify="required" placeholder="请求地址：https://crm-sit.sunwoda.com" lay-reqtext="请求地址" autocomplete="off" class="layui-input" lay-affix="clear">
+                                    </div>
+                                 </div>
+                                 <div class="layui-form-item">
+                                    <div class="layui-input-wrap">
+                                      <div class="layui-input-prefix"></div>
+                                      <input type="text" name="addaccount"  id="addaccount" value="" lay-verify="required" placeholder="账号信息：[{管理员:{password:00000,username:00000000}}]" lay-reqtext="账号信息" autocomplete="off" class="layui-input" lay-affix="clear">
+                                    </div>
+                                 </div>
+                                <div class="layui-form-item">
+                                    <div class="layui-input-wrap">
+                                      <div class="layui-input-prefix"></div>
+                                      <input type="text" name="adddesc"  id="adddesc" value="" lay-verify="required" placeholder="配置描述：CRM系统" lay-reqtext="配置描述" autocomplete="off" class="layui-input" lay-affix="clear">
+                                    </div>
+                                 </div>
+                              </div>
+                              <div class="layui-form-item">
+                                <button class="layui-btn layui-btn-fluid" lay-submit lay-filter="demo-login">提交</button>
+                              </div>
+                        </div>
+                  </div>
+                `,
+                success: function(){
+                 // 对弹层中的表单进行初始化渲染
+                  form.render();
+<!--                    $(document).ready(function(){-->
+<!--                      $('#addaount').val(account);-->
+<!--                      $('#addurl').val(host);-->
+<!--                      $('#projectName').val(project);-->
+<!--                    });-->
+                  // 表单提交事件
+                  form.on('submit(demo-login)', function(data){
+                    var field = data.field; // 获取表单字段值
+                    // 显示填写结果，仅作演示用
+                    <!-- layer.alert(JSON.stringify(field), {-->
+                    <!-- title: '当前填写的字段值'-->
+                    <!--});-->
+                    //关闭弹窗
+                    addcasecount(JSON.stringify(field))
+                    layer.close(index)
+                    // 此处可执行 Ajax 等操作
+                    // …
+                    return false; // 阻止默认 form 跳转
+                  });
+                }
+              });
+            }
+          })
+        });
+    }
+
+
+<!--新增账号信息-->
+function addcasecount(data){
+      $.ajax({
+          url: "addcasecounts", // 服务器端点
+          type: 'POST', // 请求方法类型
+          data: JSON.stringify({"data":data}), // 要发送的数据
+          contentType: 'application/json',
+          dataType: 'json',             // 预期服务器返回的数据类型
+          success: function(response) {
+             console.log(response);
+              getcaseconf()
+         }
+      });
+}
+
+
+function getrecodes(){
+       $.ajax({
+          url: 'getcmdinfo', // 服务器端点
+          type: 'POST', // 请求方法类型
+          dataType: 'json',             // 预期服务器返回的数据类型
+          success: function(response) {
+            $('#dataTable4').DataTable().destroy();
+             var element2 = document.getElementById('dataTable4');
+             if(element2){
+                $('#dataTable4 tbody').empty();
+                var data = response;
+                $.each(data, function(index, item) {
+                    var row = $('<tr></tr>');
+                    row.append($('<td></td>').text(index+1));
+                    row.append($('<td></td>').text(item.type));
+                    row.append($('<td></td>').text(item.createtime));
+                    row.append($('<td></td>').text(item.currentIp));
+                    row.append($('<td></td>').text(item.publicIp));
+                    row.append($('<td></td>').text(item.UserName));
+                    row.append($('<td></td>').text(item.hostName));
+                    row.append($('<td></td>').text(item.path));
+                    row.append($('<td></td>').text(item.info));
+                    $('#dataTable4 tbody').append(row);
+                });
+                 $('#dataTable4').DataTable(tableType);
+                 var overlay = document.getElementById('loadingOverlay');
+                 overlay.style.display = 'none';
+              }else{
+                    alert(JSON.stringify(response))
+              }
+         }
+      });
+}
+
+
+
+
+function getbuilddetaill(data){
+<!--      var access_token = localStorage.getItem('Authorization');-->
+      $.ajax({
+          url: 'getdate/'+data, // 服务器端点
+          type: 'GET', // 请求方法类型
+          dataType: 'json',             // 预期服务器返回的数据类型
+<!--          headers: {-->
+<!--                'Authorization': 'Bearer '+access_token, // 如果需要发送 JSON 数据-->
+<!--            } ,-->
+          success: function(response) {
+            $('#dataTable2').DataTable().destroy();
+             var element2 = document.getElementById('dataTable2');
+             if(element2){
+                $('#dataTable2 tbody').empty();
+                var data = response;
+                $.each(data, function(index, item) {
+                    var row = $('<tr></tr>');
+                    row.append($('<td></td>').text(index+1));
+                    row.append($('<td></td>').text(item.project));
+                    row.append($('<td></td>').text(item.interface));
+                    row.append($('<td></td>').text(item.module));
+                    row.append($('<td></td>').text(item.function));
+                    row.append($('<td></td>').text(item.api));
+                    row.append($('<td></td>').text(item.consumetime));
+                    row.append($('<td></td>').text(item.createtime));
+                    row.append($('<td></td>').text(item.currentIp));
+                    row.append($('<td></td>').text(item.hostName));
+                    if(item.message=="run success"){
+                        row.append($('<td></td>').text("成功"));
+                    }else{
+                        row.append($('<td></td>').text("失败"));
+                    }
+                    $('#dataTable2 tbody').append(row);
+                });
+                $('#dataTable2').DataTable(tableType);
+                  var overlay = document.getElementById('loadingOverlay');
+                  overlay.style.display = 'none';
+
+              }else{
+                    alert(JSON.stringify(response))
+              }
+         }
+      });
+}
+
+
+
+<!--二次确认-->
+function showConfirm(func,datas='') {
+    if (confirm("你确定要继续吗？")) {
+        // 用户点击了“确定”按钮
+        if(func === 'saveconfig'){
+        <!--保存用例配置-->
+            saveconfig('saverunconfig','filename10','editcase10','filename10_save','filename10_bak');
+        }else if(func === 'saverunconfig'){
+        <!--保存运行配置-->
+            saveconfig('saverunconfig','filename11','editcase11','filename11_save','filename11_bak');
+        }else if(func === 'buildfile'){
+        <!--执行用例-->
+            buildfile('buildfile',datas);
+        }else if(func === 'buildfileall'){
+        <!--执行用例-->
+            buildfile('buildfileall',datas);
+        } else if(func === 'delfilebacks'){
+        <!--删除备份-->
+            delfilebacksfile(datas)
+        }else if(func === 'delfilejmxsfile'){
+        <!--删除压测-->
+            delfilejmxsfile(datas)
+        }else if(func === 'delfile'){
+        <!--删除文件-->
+          $.ajax({
+              url: 'delfile',
+              type: 'POST',
+              data: JSON.stringify({"filename":datas}), // 要发送的数据
+              contentType: 'application/json',
+              dataType: 'json',             // 预期服务器返回的数据类型
+              success: function(response) {
+                    console.log(response);
+                 }
+          });
+        }
+    } else {
+        // 用户点击了“取消”按钮
+        console.log("用户取消了操作");
+    }
+}
+
+
+function buildfile(api,projectName){
+      $.ajax({
+          url: api, // 服务器端点
+          type: 'POST', // 请求方法类型
+          data: JSON.stringify({"filename":projectName}), // 要发送的数据
+          contentType: 'application/json',
+          dataType: 'json',             // 预期服务器返回的数据类型
+          success: function(response) {
+             console.log(response);
+         }
+      });
+}
+
+<!--选择用例-->
+function selectcase(projectName){
+       var box = document.getElementById('selectAll');
+       box.checked = false;
+       var element = document.getElementById('dataTable3');
+       var th0 = element.getElementsByTagName('th')[0]
+       var th2 = element.getElementsByTagName('th')[2]
+       th0.style.width = '5%';
+       th0.style.width = '10%';
+      var access_token = localStorage.getItem('Authorization');
+      $.ajax({
+          url: 'selectcase', // 服务器端点
+          type: 'POST', // 请求方法类型
+          data: JSON.stringify({"projectName":projectName}), // 要发送的数据
+          contentType: 'application/json',
+          dataType: 'json',             // 预期服务器返回的数据类型
+          headers: {
+                'Authorization': 'Bearer '+access_token, // 如果需要发送 JSON 数据
+            } ,
+          success: function(response) {
+             $('#dataTable3').DataTable().destroy();
+             if(element){
+                 $('#dataTable3 tbody').empty();
+                 var data = Object.values(response);
+                 $.each(data[0], function(index, item) {
+                    var arr = item.split("_")[0];
+                    var row = $('<tr></tr>');
+                    row.append($('<td ></td>').text(index+1));
+                    row.append($('<td></td>').text(arr));
+                    row.append($('<td></td>').text(projectName));
+                    row.append($('<td></td>').text(item));
+                    if(data[1]){
+                         if(data[1].includes(item)){
+                            row.append($("<td> <input type='checkbox' name='ck' checked /></td>"));
+                        }else{
+                           row.append($("<td> <input type='checkbox' name='ck' /></td>"));
+                        }
+                    }else{
+                           row.append($("<td> <input type='checkbox' name='ck' /></td>"));
+                    }
+
+                    $('#dataTable3 tbody').append(row);
+
+                });
+                    $('#dataTable3').DataTable(tableType);
+                    var overlay = document.getElementById('loadingOverlay');
+                    overlay.style.display = 'none';
+              }else{
+                    alert(JSON.stringify(response))
+              }
+         }
+      });
+}
+
+function saveconfig(func,filenameId,contentId,savebtnId,backbtnId){
+    var filename = document.getElementById(filenameId);
+    var content = document.getElementById(contentId);
+    var savebtn = document.getElementById(savebtnId);
+    var backbtn = document.getElementById(backbtnId);
+    var access_token = localStorage.getItem('Authorization');
+      $.ajax({
+          url: func, // 服务器端点
+          type: 'POST', // 请求方法类型
+          data: JSON.stringify({
+            "path":filename.value,
+            "content":content.value,
+          }), // 要发送的数据
+          contentType: 'application/json',
+          headers: {
+                'Authorization': 'Bearer '+access_token, // 如果需要发送 JSON 数据
+            } ,
+          dataType: 'json',             // 预期服务器返回的数据类型
+          success: function(response) {
+             console.log(response);
+             content.disabled = true;
+             savebtn.style.display = "none";
+             backbtn.style.display = "block";
+         }
+
+      });
+}
+
+
+
+
+<!--上传规定文件格式的文件-->
+function uploadfiles(file,status){
+        var file_data = $(file).prop('files')[0];
+        var form_data = new FormData();
+        form_data.append('file', file_data);
+        var access_token = localStorage.getItem('Authorization');
+        $.ajax({
+            url: 'uploadfile',
+            dataType: 'json',
+            cache: false,
+            contentType: false,
+            processData: false,
+            data: form_data,
+            type: 'post',
+            success: function(response) {
+               <!--  添加蒙层-->
+                var overlay = document.getElementById('loadingOverlay');
+                overlay.style.display = 'none';
+                if(response['status'] === "success"){
+                    alert('上传成功');
+                    location.reload();
+                    switchTab("upload2");
+                };
+                document.getElementById(status).textContent = response['message'];
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                // 请求失败时的回调函数
+                console.error('请求失败: ' + textStatus, errorThrown);
+            }
+        });
+}
+
+<!--上传其他文件-->
+function uploadfilesalltype(file,status){
+        var file_data = $(file).prop('files')[0];
+        var form_data = new FormData();
+        form_data.append('file', file_data);
+        var access_token = localStorage.getItem('Authorization');
+        $.ajax({
+            url: 'uploadfilealltype',
+            dataType: 'json',
+            cache: false,
+            contentType: false,
+            processData: false,
+            data: form_data,
+            type: 'post',
+            success: function(response) {
+                var overlay = document.getElementById('loadingOverlay');
+                overlay.style.display = 'none';
+                if(response['status'] === "success"){
+                    alert('上传成功');
+                     location.reload();
+                     switchTab("upload12");
+                };
+
+
+                document.getElementById(status).textContent = response['message'];
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                // 请求失败时的回调函数
+                console.error('请求失败: ' + textStatus, errorThrown);
+            }
+        });
+}
+
+<!--登录存储token-->
+function loginapi(){
+      var username = document.getElementById("username");
+      var password = document.getElementById("password");
+      $.ajax({
+        url: '/login',
+        type: 'POST',
+        contentType: 'application/json',
+        data: JSON.stringify({"username": username.value, "password": password.value}),
+        success: function(response) {
+            console.log(response);
+            // 保存 JWT 到 localStorage、Cookies 或 sessionStorage
+            localStorage.setItem('Authorization', response.access_token);
+            uploads(response.access_token);
+<!--            // 重定向到首页-->
+<!--            window.location.href = '/upload1';-->
+    },
+    error: function(error) {
+        console.error('Login failed:', error);
+    }
+});
+}
+
+<!--登录存储token-->
+function uploads(access_token){
+      if (access_token == ''){
+	     var access_token = localStorage.getItem('Authorization');
+        }
+        console.log(access_token);
+      $.ajax({
+        url: 'upload1',
+        type: 'POST',
+        headers:{
+            'Authorization':access_token
+        },
+        success: function(response) {
+            document.getElementById('jwttokendemo').innerHTML = response
+            var div = document.getElementById('indexaoge');
+            div.style.display = 'none';
+    },
+    error: function(error) {
+        console.error('Login failed:', error);
+    }
+});
+}
+
+
+
+<!--上传文件部分-->
+$(document).ready(function() {
+    $('#upload-btn').click(function() {
+        var file_data = $('#file-input').prop('files')[0];
+        var form_data = new FormData();
+        form_data.append('file', file_data);
+        // 发起 AJAX 请求
+        $.ajax({
+            url: 'uploadfile',
+            dataType: 'json',
+            cache: false,
+            contentType: false,
+            processData: false,
+            data: form_data,
+            type: 'post',
+            success: function(response) {
+                if(response['status'] === "success"){
+<!--                    alert('上传成功');-->
+                    location.reload();
+                };
+                document.getElementById('status').textContent = response['message'];
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                // 请求失败时的回调函数
+                console.error('请求失败: ' + textStatus, errorThrown);
+            }
+        });
+    });
+});
+
+
+<!--上传文件部分-->
+$(document).ready(function() {
+    $('#upload-btn1').click(function() {
+        var file_data = $('#file-input1').prop('files')[0];
+        var form_data = new FormData();
+        form_data.append('file', file_data);
+        // 发起 AJAX 请求
+        $.ajax({
+            url: 'uploadfile',
+            dataType: 'json',
+            cache: false,
+            contentType: false,
+            processData: false,
+            data: form_data,
+            type: 'post',
+            success: function(response) {
+                if(response['status'] === "success"){
+                    alert('上传成功');
+                    location.reload();
+                };
+                document.getElementById('status1').textContent = response['message'];
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                // 请求失败时的回调函数
+                console.error('请求失败: ' + textStatus, errorThrown);
+            }
+        });
+    });
+});
+
+function toggleAll(source) {
+  var checkboxes = document.getElementsByName('ck');
+  for (var i = 0, n = checkboxes.length; i < n; i++) {
+    checkboxes[i].checked = source.checked;
+  }
+}
+
+
+function getselect() {
+  var checkboxes = document.getElementsByName('ck');
+  let list = [];
+  for (var i = 0, n = checkboxes.length; i < n; i++) {
+    if(checkboxes[i].checked){
+     list.push(i);
+    }
+  }
+  var tableId = document.getElementById("dataTable3");
+  if(list.length>0){
+    savecases(tableId.rows[1].cells[1].innerHTML,tableId.rows[1].cells[2].innerHTML,list)
+  }else{
+    clearcaseunit();
+  }
+}
+
+<!--将选中的用例写入文件中-->
+function savecases(systemname,jobname,nolist){
+      $.ajax({
+        url: 'selectindex',
+        type: 'POST',
+        contentType: 'application/json',
+        data: JSON.stringify({"systemname": systemname,"jobname": jobname, "nolist": nolist}),
+        success: function(response) {
+            console.log(response);
+            switchTab('upload3')
+<!--            getapidetaill();-->
+<!--            location.reload(true);-->
+
+    },
+    error: function(error) {
+        console.error(' failed:', error);
+    }
+});
+}
+
+<!--如果一个用例没有选择则清空测试套件文件-->
+function clearcaseunit(){
+      $.ajax({
+        url: 'clearcaseunits',
+        type: 'POST',
+        contentType: 'application/json',
+        success: function(response) {
+            console.log(response);
+            switchTab('upload3')
+    },
+    error: function(error) {
+        console.error(' failed:', error);
+    }
+});
+}
+
+
+
+<!--用例配置账号部分-->
+function updateaccount(data) {
+    var element = document.getElementById('dataTable6');
+    $('#dataTable6').DataTable().destroy();
+    if(element){
+         $('#dataTable6 tbody').empty();
+         var data1 = JSON.parse(JSON.stringify(data['account']))
+         var projectName = JSON.parse(JSON.stringify(data['projectName']))
+         $.each(data1, function(index, item) {
+            var row = $('<tr></tr>');
+            row.append($('<td ></td>').text(index+1));
+            row.append($('<td></td>').text(projectName));
+            row.append($('<td ></td>').text(Object.keys(item)));
+            row.append($('<td></td>').text(JSON.stringify(Object.values(item))));
+            row.append($('<td></td>').append($('<button class="layui-btn layui-btn-fluid" title="编辑"  onclick=updateauser(\''+projectName+'\',\''+JSON.stringify(Object.values(item))+'\')><i class="layui-icon layui-icon-edit"></i></button>')));
+            $('#dataTable6 tbody').append(row);
+        });
+         $('#dataTable6').DataTable(tableType);
+    }
+}
+
+
+
+
+<!--添加蒙层部分-->
+<!--选择用例-->
+document.getElementById('getcasename').addEventListener('click', function() {
+    var overlay = document.getElementById('loadingOverlay');
+    overlay.style.display = 'flex'; // 显示蒙层
+});
+
+<!--查看结果-->
+document.getElementById('getbuildresult').addEventListener('click', function() {
+    var overlay = document.getElementById('loadingOverlay');
+    overlay.style.display = 'flex'; // 显示蒙层
+});
+
+
+<!--首页用例操作加载-->
+document.getElementById('index').addEventListener('click', function() {
+    var overlay = document.getElementById('loadingOverlay');
+    overlay.style.display = 'flex'; // 显示蒙层
+    // 模拟加载过程
+    setTimeout(function() {
+        overlay.style.display = 'none'; // 加载完毕，隐藏蒙层
+    }, 10000);
+});
+
+<!--查看操作历史-->
+document.getElementById('getcmdrecode').addEventListener('click', function() {
+    var overlay = document.getElementById('loadingOverlay');
+    overlay.style.display = 'flex'; // 显示蒙层
+});
+
+<!--删除文件-->
+document.getElementById('getcmdrecode').addEventListener('click', function() {
+    var overlay = document.getElementById('loadingOverlay');
+    overlay.style.display = 'flex'; // 显示蒙层
+});
+
+<!--查看测试用例-->
+document.getElementById('getcasedetaill').addEventListener('click', function() {
+    var overlay = document.getElementById('loadingOverlay');
+    overlay.style.display = 'flex'; // 显示蒙层
+});
+
+
+<!--运行文件中的用例-->
+document.getElementById('runcasebyfiles').addEventListener('click', function() {
+    var overlay = document.getElementById('loadingOverlay');
+    overlay.style.display = 'flex'; // 显示蒙层
+});
+
+<!--测试添加的用例是否正常-->
+document.getElementById('apitestcase').addEventListener('click', function() {
+    var overlay = document.getElementById('loadingOverlay');
+    overlay.style.display = 'flex'; // 显示蒙层
+});
+
+
+<!--上传测试文件-->
+document.getElementById('file-input11').addEventListener('click', function() {
+    var overlay = document.getElementById('loadingOverlay');
+    overlay.style.display = 'flex'; // 显示蒙层
+});
+
+<!--上传其他文件-->
+document.getElementById('file-input12').addEventListener('click', function() {
+    var overlay = document.getElementById('loadingOverlay');
+    overlay.style.display = 'flex'; // 显示蒙层
+});
+
+
+
+function getcasefile() {
+    var inputContent = document.getElementById('casefiles').value;
+    alert(inputContent);
+}
+
+
+<!--菜单联动-->
+layui.use('form', function(){
+    var form = layui.form;
+    form.on('select(demo-select-filter)',function(data){
+         var firstValue = data.value
+         var $secondSelect = $('#moudlename')
+         var $roleSelect = $('#role')
+         indexthtl = ''
+         rolethtl = ''
+          $.ajax({
+                url: 'getmenu',
+                type: 'POST',
+                contentType: 'application/json',
+                success: function(response) {
+                    var index = response[firstValue]["menu"]
+                    var rolelist = response[firstValue]["role"]
+                     for (i=0;i<index.length;i++){
+                         indexthtl+='<option value="'+index[i]+'">'+index[i]+'</option>'
+                     }
+                     for (i=0;i<rolelist.length;i++){
+                         rolethtl+='<option value="'+rolelist[i]+'">'+rolelist[i]+'</option>'
+                     }
+                     $secondSelect.html(indexthtl);
+                     $roleSelect.html(rolethtl);
+                     form.render('select'); // 更新二级下拉框的渲染
+                 },
+               error: function(error) {
+                console.error('failed:', error);
+             }
+        })
+    });
+});
+
+
+function testcase(){
+    var systemname = $('#systemnameindex').val();
+    var role = $('#role').val();
+    var url = $('#url').val();
+    var method = $('#method').val();
+    var body = $('#body1').val();
+    var save_key = $('#save_key').val();
+    var asserts = $('#asserts').val();
+<!--    if(body=="" || body==null || url=="" || url==null || asserts=="" || asserts==null ){-->
+<!--       var overlay = document.getElementById('loadingOverlay');-->
+<!--       overlay.style.display = 'none';-->
+<!--       alert("必填项不能为空");-->
+<!--    }else{-->
+        $.ajax({
+                url: 'gettestapi',
+                type: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify({
+                    "systemname": systemname,
+                    "role": role,
+                    "url": url,
+                    "method": method,
+                    "body": body,
+                    "save_key": save_key,
+                    "asserts": asserts
+                }),
+                success: function(response) {
+                    alert(response['msg'])
+                    var overlay = document.getElementById('loadingOverlay');
+                    overlay.style.display = 'none';
+                 },
+                error: function(error) {
+                console.error('failed:', error);
+             }
+        })
+<!--  }-->
+}
+
+
+<!--添加用例到yaml文件中-->
+function addcases(){
+    var filemname = $('#filenames').val();
+<!--    var systemname = $('#systemnameindex').text;-->
+    var selectElement = document.getElementById('systemnameindex');
+    var systemname = selectElement.options[selectElement.selectedIndex].text;
+    var moudlename = $('#moudlename').val();
+    var functionname = $('#functionname').val();
+    var role = $('#role').val();
+    var url = $('#url').val();
+    var method = $('#method').val();
+    var body = $('#body1').val();
+    var save_key = getsavekey();
+    var asserts = getassert();
+        $.ajax({
+                url: 'addcases',
+                type: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify({
+                    "filemname":filemname,
+                    "systemname":systemname,
+                    "moudlename":moudlename,
+                    "functionname":functionname,
+                    "role":role,
+                    "url":url,
+                    "method":method,
+                    "body":body,
+                    "save_key":save_key,
+                    "asserts":asserts
+                }),
+                success: function(response) {
+                    alert(JSON.stringify(response))
+                    var overlay = document.getElementById('loadingOverlay');
+                    overlay.style.display = 'none';
+                 },
+                error: function(error) {
+                console.error('failed:', error);
+             }
+        })
+
+}
+
+
+<!--文件名称不被清空-->
+ document.getElementById("resetButton").onclick = function(){
+        var myInput = document.getElementById("filenames");
+        myInput.defaultValue = myInput.value;
+        document.forms[0].reset()
+    }
+
+function resultmsg(msg){
+      layui.use(function(){
+      var layer = layui.layer;
+      var util = layui.util;
+      // 批量事件
+      util.on('lay-on', {
+          resetbtn: function(){
+<!--          layer.confirm(msg, {btn: ['确定', '关闭']});-->
+          layer.alert(msg);
+        }
+      });
+    });
+}
+
+<!--跳转到测试报告-->
+function goToLink(content,type) {
+  if(type === "DFX"){
+    window.location.href = 'http://apitest.sunwoda.com/'+content+'/report';
+  }else{
+    window.location.href = 'http://apitest.sunwoda.com/'+content+'/allure-report';
+  }
+}
+
+<!--刷新后仍然停留在当前位置-->
+ function  Trim(strValue)
+   {
+      return   strValue.replace(/^s*|s*$/g,"");
+   }
+
+   function SetCookie(sName,sValue)
+   {
+      document.cookie = sName + "=" + escape(sValue);
+   }
+
+   function GetCookie(sName)
+   {
+      var aCookie = document.cookie.split(";");
+      for(var　i=0;　i　< aCookie.length;　i++)
+      {
+         var aCrumb = aCookie[i].split("=");
+         if(sName　== Trim(aCrumb[0]))
+         {
+            return unescape(aCrumb[1]);
+         }
+      }
+
+      return null;
+   }
+
+   function scrollback()
+   {
+      if(GetCookie("scroll")!=null){document.body.scrollTop=GetCookie("scroll")}
+   }
+
+
+$("#addButton").click(function() {
+  const newRow = $("<tr><td contenteditable='true' > </td><td contenteditable='true'> </td></tr>");
+  $("#myTable3").append(newRow);
+});
+
+function deleteLastRow() {
+  var table = document.getElementById("myTable3");
+  if(table.rows.length - 1>0){
+    table.deleteRow(table.rows.length - 1);
+  }
+}
+
+$("#addButton1").click(function() {
+  const newRow = $("<tr><td contenteditable='true' ></td><td contenteditable='true'></td><td contenteditable='true'></td></tr>");
+  $("#myTable5").append(newRow);
+});
+
+function deleteLastRow1() {
+  var table = document.getElementById("myTable5");
+  if(table.rows.length - 1>0){
+    table.deleteRow(table.rows.length - 1);
+  }
+}
+
+
+<!--格式化body文本-->
+    function formatJson(text) {
+    try {
+        const obj = JSON.parse(text);
+        return JSON.stringify(obj, null, 2);
+    } catch (e) {
+        return text;
+    }
+}
+
+function initJsonFormatter(textboxId) {
+    const textbox = document.getElementById(textboxId);
+    if (textbox) {
+        textbox.addEventListener('blur', function() {
+            this.value = formatJson(this.value);
+        });
+    }
+}
+
+<!--获取提取参数值-->
+function getsavekey(){
+    var values = [];
+    $("#myTable3 tr").each(function() {
+      var rowValues = [];
+      $(this).find("td").each(function() {
+        rowValues.push($(this).html());
+      });
+     if(rowValues.length>0 || rowValues!="" ){
+         values.push(rowValues);
+      }
+    });
+     console.log(JSON.stringify(values));
+     return  JSON.stringify(values);
+}
+
+
+<!--获取断言值-->
+ function getassert(){
+    var values = [];
+    $("#myTable5 tr").each(function() {
+      var rowValues = [];
+      $(this).find("td").each(function() {
+        rowValues.push($(this).html());
+      });
+      if(rowValues.length>0 ){
+         values.push(rowValues);
+      }
+    });
+
+    console.log(JSON.stringify(values));
+    return  JSON.stringify(values);
+}
+
+<!--重启服务-->
+function liunx_restartservices(){
+    $.ajax({
+            url: 'restartservices',
+            type: 'GET',
+            contentType: 'application/json',
+            success: function(response) {
+                alert(JSON.stringify(response))
+             },
+            error: function(error) {
+            console.error('failed:', error);
+         }
+    })
+
+}
+<!--停止服务-->
+function liunx_stopservices(){
+    $.ajax({
+            url: 'stopservices',
+            type: 'GET',
+            contentType: 'application/json',
+            success: function(response) {
+                alert(JSON.stringify(response))
+             },
+            error: function(error) {
+            console.error('failed:', error);
+         }
+    })
+
+}
+</script>
+</html>

@@ -1,0 +1,41 @@
+email: li03@hotmail.com
+phone: '15587081082'
+contactsName: 高秀英
+customerName: 中国三六重工13395分公司
+orgName: 欣智旺
+deptName: 销售二部
+contractName: 合同23844
+loginurl: https://crm-uat.sunwoda.com/login/
+starttime: '2024-11-01 16:04:04'
+datetimelist:
+  date_yesterday: '2024-10-31'
+  date_today: '2024-11-01'
+  time_today: '2024-11-01 16:04:04'
+  date_tomorrow: '2024-11-02'
+  yesterday_timestamp: '1730304000'
+  current_timestamp: '1730390400'
+  tomorrow_timestamp: '1730476800'
+  begin_data_last_month: '2024-10-01'
+  end_data_last_month: '2024-10-31'
+  begin_data_current_month: '2024-11-01'
+  end_data_current_month: '2024-11-30'
+  begin_data_next_month: '2024-12-01'
+  end_data_next_month: '2024-12-31'
+  last_month: '10'
+  current_month: '11'
+  next_month: '12'
+  last_year: '2023'
+  current_year: '2024'
+  next_year: '2025'
+  begin_crrent_weekday: '2024-10-28'
+  end_crrent_weekday: '2024-11-03'
+  begin_last_weekday: '2024-10-21'
+  end_last_weekday: '2024-10-27'
+  begin_data_current_year: '2024-01-01'
+  end_data_current_year: '2024-12-31'
+  begin_data_last_year: '2023-01-01'
+  end_data_last_year: '2023-12-31'
+  randmun: 5945C6B6A265
+  datetimename: '20241101160404'
+  datatoday: '01'
+  randintdata: '13965'

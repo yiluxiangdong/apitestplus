@@ -1,0 +1,151 @@
+- interfaceName: OTD系统_订单管理_新增订单yaml
+  module: 单据管理
+  function: 需求单据管理
+  level: critical
+  systemName: OTD系统
+  loop: 1
+  url: /prod-api/demandDocument/save
+  method: post
+  body:
+    headInfo:
+      custId: '741057'
+      salesChannel: 东北地区
+      company: '664'
+      shipFromId: '672'
+      orderType: 12
+      billTo: 823254
+      paymentTermName: 发票30天
+      paymentTermId: 2019
+      taxCode: 销项税内含13%
+      tax: 0.13
+      employeeNo: '2204010095'
+      applicationDate: '2024-01-24'
+      ifDefault: 1
+      sourceCode: manual
+    fileInfoList: []
+  save_key:
+  - $.data.orderNumber = orderNumber
+  - $.data.id = order_id
+  asserts:
+  - $.msgCode == 0000001111111111
+  - $.data != None
+  - $.status == 200
+- interfaceName: OTD系统_订单管理_新增行信息yaml
+  module: 单据管理
+  function: 需求单据管理
+  level: critical
+  systemName: OTD系统
+  loop: 1
+  url: /prod-api/demandDocument/save
+  method: post
+  body:
+    headInfo:
+      orderNumber: '{{orderNumber}}'
+      statusName: 新建
+      custName: 三六重工20231221141158348分公司
+      custPo: '{{datetimelist.datetimename}}{{datetimelist.tomorrow_timestamp}}'
+      priceListId: 995234
+      salesman: '100056089'
+      salesChannel: 东北地区
+      shipFromName: INV_510_深圳智能硬件一部
+      contractConstraint: no_contract
+      remark: 下单备注
+      status: new
+      shipFromId: '672'
+      unrestraintRemark: 无约束说明
+      id: '{{order_id}}'
+      shipTo: '823256'
+      contacts: '冯军成, '
+      phoneNumber: '18165700002'
+      emailAddress: 943772214@sunwoda.com
+      contactId: '712088'
+      billToDesc: XZW-AD202312210080-中关村22号
+      paymentTermId: '2019'
+      paymentTermName: 发票30天
+      taxCode: 销项税内含13%
+      paymentBasis: 增值税发票
+      currencyCode: CNY
+      paymentTypeCode: 现金
+      receiptNumberId: null
+      creditLimit: 1
+      billTo: 823254
+      employeeNo: '2204010095'
+      creator: 刘小兵
+      applicationDate: '{{datetimelist.date_tomorrow}}'
+      custId: '741057'
+  save_key: ''
+  asserts:
+  - $.msgCode == 000000
+  - $.data != None
+  - $.status == 200
+- interfaceName: OTD系统_订单管理_校验与匹配yaml
+  module: 单据管理
+  function: 需求单据管理
+  level: critical
+  systemName: OTD系统
+  loop: 1
+  url: /prod-api/demandDocumentDetail/detailSaveDelete
+  method: post
+  body:
+    detailPoList:
+    - noLine: '1'
+      tax: 0.13
+      custPoLineNo: 客户PO行{{datetimelist.datetimename}}{{datetimelist.tomorrow_timestamp}}
+      custProjectName: 三六重工
+      itemNumber: '3013990000481'
+      custMaterial: '3013990000481'
+      orderQuantity: 1
+      needByDate: '2024-01-24'
+      shipFromCode: '510'
+      donation: N
+      marketPrice: 20
+      priceListId: '995234'
+      remaining: 280
+      organizationId: '672'
+      inventoryItemId: '157673'
+      itemDesc: PCBA 2  PCB半成品 环保RoHs
+      unit: PCS
+      custProjectId: 275
+      custMaterialDesc: null
+      productCode: null
+      custItem: '3013990000481'
+      priceListList:
+      - name: 三六重工20231221141158348分公司11
+        price: 5
+        listHeaderId: '999154'
+      - name: 三六重工20231221141158348分公司-2
+        price: 20
+        listHeaderId: '995234'
+      - name: 三六重工20231221141158348分公司
+        price: 10
+        listHeaderId: '994168'
+      itemType: null
+      messageColor: '#52c41a'
+      checkSuccess: true
+      shipFromId: '672'
+    orderId: '{{order_id}}'
+  save_key: ''
+  asserts:
+  - $.msgCode == 000000
+  - $.data != None
+  - $.status == 200
+- interfaceName: OTD系统_订单管理_启动审批yaml
+  module: 单据管理
+  function: 需求单据管理
+  level: critical
+  systemName: OTD系统
+  loop: 1
+  url: /prod-api/v1/oa/prepare/initiate
+  method: post
+  body:
+    approver: 2109140050,2007160176,1901140036
+    approval_comments: 同意
+    order_id: '{{order_id}}'
+    order_type: document_Order
+    order_num: '{{orderNumber}}'
+    businessType: 12
+  save_key: ''
+  asserts:
+  - $.msgCode == 000000
+  - $.data != None
+  - $.status == 200

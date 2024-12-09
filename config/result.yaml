@@ -1,0 +1,49 @@
+- name: MRO系统_订单管理_查询订单列表
+  project: MRO系统
+  module: 订单管理
+  function: 查询订单列表
+  interface: MRO系统_订单管理_查询订单列表
+  message: run success
+  status: true
+  api: /api/mro/mallOrder/third/supply/list
+  consumetime: 0.1
+  createtime: '2024-11-01 16:04:07'
+  result: '{"code": 200, "message": "操作成功", "data": {"pageNum": 1, "pageSize": 10,
+    "size": 1, "startRow": 1, "endRow": 1, "total": 1, "pages": 1, "list": [{"id":
+    "1847096120254136320", "pageNum": 1, "pageSize": 10, "tenantId": "1396686727992586240",
+    "createAt": "2024-10-18 10:03:27", "createBy": "1516380993970241536", "updateAt":
+    "2024-10-18 10:10:00", "updateBy": "1396686727992586241", "disableFlag": 1, "orderCode":
+    "0082024101884628MRO", "requisitionsId": "1847096119922786304", "requisitionsCode":
+    "PT2024101800002SWDMRO", "storeHouseId": "1410876941753384960", "pickerId": null,
+    "orderDepartmentId": null, "supplyId": "1021684397037846528", "total": 1360.0,
+    "applyTime": "2024-10-18", "replyTime": null, "demandTime": "2024-10-19", "orderTime":
+    1729217007000, "deliveryTimeType": null, "reason": "1111", "remark": null, "turnMessage":
+    null, "timeoutStatus": null, "status": 4, "statusArr": null, "oaOrderCode": "0082024101884628MRO",
+    "orderDepartment": "欣旺达电子股份有限公司", "orderDepartmentOu": "290", "approvalTime":
+    "2024-10-18", "orderType": 1, "sourceCode": "3022024101800001SWDMPO", "sourceId":
+    "1847096089925124096", "pringFlag": 0, "disposableFlag": null, "applyStartTime":
+    null, "applyStartTimeDate": null, "applyEndTime": null, "applyEndTimeDate": null,
+    "supplyName": "深圳市天富包装制品有限公司", "tenantName": null, "buyerName": null, "buyerTelephone":
+    null, "warehouseName": "欣旺达默认仓库", "warehouseAddress": null, "address": null, "sourceAddress":
+    "广东省深圳市宝安区石岩街道石龙社区颐和路2号石龙仔D栋1楼(石龙仔行政辅料中央仓)", "sourceWarehouseKeeperTel": "15986718460
+    ", "sourceWarehouseKeeperName": "潘明", "sourceAddressId": null, "pickerName": null,
+    "sourcePickerName": null, "warehouseKeeperName": null, "warehouseKeeperTel": null,
+    "statusName": null, "typeName": null, "requisitionsCodeOa": null, "remind": null,
+    "saleOrderCode": "0082024101884628MRO", "customerType": null, "sourceOrderDepartment":
+    "欣旺达电子股份有限公司", "sourceWarehouseName": "石龙仔行政辅料中央仓", "clientOrderCode": null, "parentCode":
+    null, "goodsName": null, "itemNo": null, "clientMaterialCode": null, "parentCodeFlag":
+    null, "replyFlag": null, "onShelfType": null, "orderTenantId": 1006879801207685120,
+    "orderRequisitionsId": 1847096089476333568, "addressStoreHouseId": 1319920911364653056,
+    "category1Id": null, "category2Id": null, "deliveryMode": null, "orderParamList":
+    null, "code": null, "productionMaterialFlag": 0, "orderStatus": 4, "materialCode":
+    null, "checkOrder": null, "clientName": null, "dlOrderId": null, "dlOrderCode":
+    null, "approvalStartTime": null, "approvalEndTime": null, "productFlag": null,
+    "possessId": null, "isMoq": null, "standardDeliveryTimeStart": null, "standardDeliveryTimeEnd":
+    null}], "prePage": 0, "nextPage": 0, "isFirstPage": true, "isLastPage": true,
+    "hasPreviousPage": false, "hasNextPage": false, "navigatePages": 8, "navigatepageNums":
+    [1], "navigateFirstPage": 1, "navigateLastPage": 1, "firstPage": 1, "lastPage":
+    1}, "status": 200}'
+  currentIp: 192.168.12.79
+  publicIp: 0.0.0.0
+  UserName: root
+  hostName: localhost.localdomain

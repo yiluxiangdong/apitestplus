@@ -1,0 +1,643 @@
+<!--E:\sunwoda\reportserver\templates\main.html-->
+{% extends "base.html" %}
+{% block content %}
+<body>
+<!-- 遮罩层内容 -->
+<!--<div id="overlay" class="overlay">-->
+<!--    <div class="overlay-content">-->
+<!--        <h2>加载中...</h2>-->
+<!--        <p>请稍候，正在获取数据...</p>-->
+<!--    </div>-->
+<!--</div>-->
+<div id="reponsetext"></div>
+<div class="layui-layout layui-layout-admin" id="mytest">
+  <div class="layui-header">
+    <div class="layui-logo layui-hide-xs layui-bg-black">自动化测试平台</div>
+    <!-- 头部区域（可配合layui 已有的水平导航） -->
+    <ul class="layui-nav layui-layout-left">
+      <!-- 移动端显示 -->
+      <li class="layui-nav-item layui-show-xs-inline-block layui-hide-sm" lay-header-event="menuLeft">
+        <i class="layui-icon layui-icon-spread-left"></i>
+      </li>
+<!--      <li class="layui-nav-item layui-hide-xs"><a href="javascript:;">nav 1</a></li>-->
+<!--      <li class="layui-nav-item layui-hide-xs"><a href="javascript:;">nav 2</a></li>-->
+<!--      <li class="layui-nav-item layui-hide-xs"><a href="javascript:;">nav 3</a></li>-->
+<!--      <li class="layui-nav-item">-->
+<!--        <a href="javascript:;">nav groups</a>-->
+<!--        <dl class="layui-nav-child">-->
+<!--          <dd><a href="javascript:;">menu 11</a></dd>-->
+<!--          <dd><a href="javascript:;">menu 22</a></dd>-->
+<!--          <dd><a href="javascript:;">menu 33</a></dd>-->
+<!--        </dl>-->
+<!--      </li>-->
+    </ul>
+    <ul class="layui-nav layui-layout-right">
+      <li class="layui-nav-item layui-hide layui-show-sm-inline-block">
+        <a href="javascript:;">
+          <img src="//unpkg.com/outeres@0.0.10/img/layui/icon-v2.png" class="layui-nav-img">
+          tester
+        </a>
+        <dl class="layui-nav-child">
+          <dd><a href="javascript:;">设置</a></dd>
+            <dd><a href="#" id="logout">退出</a></dd>
+        </dl>
+      </li>
+      <li class="layui-nav-item" lay-header-event="menuRight" lay-unselect>
+        <a href="javascript:;">
+          <i class="layui-icon layui-icon-more-vertical"></i>
+        </a>
+      </li>
+    </ul>
+  </div>
+  <div class="layui-side layui-bg-black">
+    <div class="layui-side-scroll">
+      <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
+      <ul class="layui-nav layui-nav-tree" lay-filter="test">
+        <li class="layui-nav-item layui-nav-itemed">
+          <a class="" href="javascript:;">用例管理</a>
+          <dl class="layui-nav-child">
+            <dd><a  onclick="switchTab('upload')">模板管理</a></dd>
+            <dd><a onclick="switchTab('upload2')">上传用例</a></dd>
+<!--            <dd><a onclick="switchTab('upload12')">文件操作</a></dd>-->
+<!--            <dd><a onclick="switchTab('upload3')">执行用例</a></dd>-->
+<!--            <dd><a onclick="switchTab('upload8')">执行结果</a></dd>-->
+            <dd><a onclick="switchTab('upload4')">添加用例</a></dd>
+          </dl>
+        </li>
+        <li class="layui-nav-item">
+          <a href="javascript:;">执行管理</a>
+          <dl class="layui-nav-child">
+            <dd><a onclick="switchTab('upload3')">构建</a></dd>
+            <dd><a onclick="switchTab('upload8')">详情</a></dd>
+          </dl>
+        </li>
+         <li class="layui-nav-item">
+          <a href="javascript:;">配置管理</a>
+          <dl class="layui-nav-child">
+            <dd><a  onclick="switchTab('upload10')">用例配置</a></dd>
+            <dd><a onclick="switchTab('upload11')">运行配置</a></dd>
+          </dl>
+        </li>
+      </ul>
+    </div>
+  </div>
+   <div class="layui-body">
+    <!-- 内容主体区域 -->
+   <div style="padding: 15px;">
+<!--      <blockquote class="layui-elem-quote layui-text">-->
+<!--        Layui 框体布局内容主体区域-->
+<!--      </blockquote>-->
+   <div class="layui-card layui-panel">
+<!--        <div class="layui-card-header">-->
+<!--          下面是充数内容，为的是出现滚动条-->
+<!--        </div>-->
+   <div class="layui-card-body">
+<!--管理用例-->
+   <div id="upload" class="tab-content active">
+
+           <table class="data-table"   style="width: 100%;height: 1px;"  border="3" id="myTable">
+              <thead>
+                <tr>
+                    <th class="nosort" style="text-align:center" >文件名</th>
+                    <th  style="text-align:center">模板类型</th>
+                    <th style="text-align:center">文件大小</th>
+                    <th style="text-align:center">上传时间</th>
+                    <th style="text-align:center">最近访问时间</th>
+                    <th style="text-align:center">最近更新时间</th>
+                    <th style="text-align:center">操作</th>
+                </tr>
+              </thead>
+          <tbody>
+           {% for item in data['data'] %}
+            <tr>
+                <td>{{item["filename"]}}</td>
+                {% if "yaml" in item["filename"] %}
+                        <td>yaml文件</td>
+                {% else%}
+                        <td>excel文件</td>
+                {%endif%}
+                <td>{{item["filesize"]}}</td>
+                <td>{{item["createTime"]}}</td>
+                <td>{{item["lastaccesstime"]}}</td>
+                <td>{{item["lastupdatetime"]}}</td>
+                <td style="width: 20% " >
+                        <div class="layui-btn-group" align="left">
+<!--                             <form action="getfile/{{item['filename']}}" method=get enctype=multipart/form-data  style="display: inline-block;float:left">-->
+                             <form  style="display: inline-block;float:left">
+                                <button  type="button"   class="layui-btn layui-btn-fluid"  onclick="switchTab('upload5',{{item['content']}})" >查看</button>
+                             </form>
+<!--                              <form  style="display: inline-block;float:left">-->
+<!--                                <button  type="button"    class="layui-btn layui-btn-fluid" onclick="switchTab('upload6',{{item}})" >编辑</button>-->
+<!--                              </form>-->
+                              <form action="downfile/{{item['filename']}}" method=get enctype=multipart/form-data style="display: inline-block;float:left">
+                                <button   class="layui-btn layui-btn-fluid">下载</button>
+                              </form>
+<!--                                <form  style="display: inline-block;float:left">-->
+<!--                                    <button    class="layui-btn layui-btn-fluid" onclick=showConfirm("delfile","{{item['filename']}}") >删除</button>-->
+<!--                                </form>-->
+                        </div>
+                </td>
+            </tr>
+        {% endfor %}
+          </tbody>
+        </table>
+
+        <div id='response' ></div>
+        </div>
+<!--上传用例-->
+   <div id="upload2" class="tab-content">
+              <table class="data-table"   style="width: 100%;height: 1px;"  border="3" id="myTable2">
+              <thead>
+                <tr>
+                    <th class="nosort" style="text-align:center" >文件名</th>
+                    <th  style="text-align:center">文件路径</th>
+                    <th style="text-align:center">文件大小</th>
+                    <th style="text-align:center">上传时间</th>
+                    <th style="text-align:center">最近访问时间</th>
+                    <th style="text-align:center">最近更新时间</th>
+                </tr>
+              </thead>
+          <tbody>
+           {% for item in data['data'] %}
+            <tr>
+                <td>{{item["filename"]}}</td>
+                <td>{{item["filepath"]}}</td>
+                <td>{{item["filesize"]}}</td>
+                <td>{{item["createTime"]}}</td>
+                <td>{{item["lastaccesstime"]}}</td>
+                <td>{{item["lastupdatetime"]}}</td>
+            </tr>
+        {% endfor %}
+          </tbody>
+        </table>
+          <div  class="forms-container" >
+               <input type="file" id="file-input" class="layui-btn">
+<!--                   <button id="upload-btn"  type="button" class="layui-btn"  style="margin-right: 50px;"   >上传文件</button>-->
+                   <button type="button" class="layui-btn"  style="margin-right: 50px;" onclick="uploadfiles('#file-input','status')"  >上传文件</button>
+                <div id="status"></div>
+            </div>
+        </div>
+<!--执行用例-->
+   <div id="upload3" class="tab-content">
+       <table class="data-table"   style="width: 100%;height: 1px;"  border="3"  id="myTable3">
+          <thead>
+            <tr>
+                <th style="text-align:center">job描述</th>
+                <th style="text-align:center">job名称</th>
+<!--                <th class="nosort" style="text-align:center">job地址</th>-->
+                <th class="nosort" style="text-align:center">类型</th>
+                <th class="nosort" style="text-align:center">累计构建次数</th>
+                <th style="text-align:center">构建</th>
+<!--                <th style="text-align:center">详情</th>-->
+            </tr>
+          </thead>
+          <tbody>
+           {% for item_build in data['jobdata'] %}
+                <tr>
+                    <td>{{item_build["desc"]}}</td>
+                    <td>{{item_build["name"]}}</td>
+<!--                    <td>{{item_build["url"]}}</td>-->
+                     {% if "DFX" in item_build["name"] %}
+                            <td>压力测试</td>
+                    {% else%}
+                            <td>接口测试</td>
+                    {%endif%}
+
+                    <td>{{item_build["count"]}}</td>
+
+                    <td style="width: 20% " >
+                        <div class="layui-btn-group" align="left">
+                            {% if "DFX" not in item_build["name"] %}
+                            <form  style="display: inline-block;float:left">
+<!--                                <button    class="layui-btn layui-btn-fluid" onclick="showConfirm('selectcase','{{item_build['name']}}')" >选择用例</button>-->
+                                <button type="button" class="layui-btn layui-btn-fluid" onclick="switchTab('upload13','{{item_build['name']}}')" >选择用例</button>
+                            </form>
+                            {%endif%}
+                            <form  style="display: inline-block;float:left">
+                                <button    class="layui-btn layui-btn-fluid" onclick="showConfirm('buildfile','{{item_build['name']}}')">构建</button>
+                            </form>
+                        </div>
+                    </td>
+               </tr>
+            {% endfor %}
+          </tbody>
+    </table>
+   </div>
+<!--添加用例-->
+   <div id="upload4" class="tab-content ">
+           <table class="data-table"   style="width: 100%;height: 1px;"  border="3" id="myTable4">
+              <thead>
+                <tr>
+                    <th class="nosort" style="text-align:center" >文件名</th>
+                    <th  style="text-align:center">文件路径</th>
+                    <th style="text-align:center">文件大小</th>
+                    <th style="text-align:center">上传时间</th>
+                    <th style="text-align:center">最近访问时间</th>
+                    <th style="text-align:center">最近更新时间</th>
+                    <th style="text-align:center">操作</th>
+                </tr>
+              </thead>
+          <tbody>
+           {% for item in data['data'] %}
+            <tr>
+                <td>{{item["filename"]}}</td>
+                <td>{{item["filepath"]}}</td>
+                <td>{{item["filesize"]}}</td>
+                <td>{{item["createTime"]}}</td>
+                <td>{{item["lastaccesstime"]}}</td>
+                <td>{{item["lastupdatetime"]}}</td>
+                <td style="width: 20% " >
+                    <div class="layui-btn-group" align="left">
+<!--                            <form action="addcase/{{item['filename']}}" method=get   style="display: inline-block;float:left">-->
+                                <button type="button" class="layui-btn layui-btn-fluid" onclick="switchTab('upload7','{{item['filename']}}')" >添加用例</button>
+
+<!--                            </form>-->
+                    </div>
+                </td>
+            </tr>
+        {% endfor %}
+          </tbody>
+        </table>
+        </div>
+<!--查看文件用例-->
+   <div id="upload5" class="tab-content ">
+<!--    <form action="/upload" >-->
+       <textarea id = "casedetaill">
+       </textarea>
+       <button    class="layui-btn layui-btn-fluid"   type="button" onclick="switchTab('upload')" >返回</button>
+<!--    </form>-->
+<!--     <button    class="layui-btn layui-btn-fluid"   type="button" onclick="switchTab('upload')" >返回</button>-->
+   </div>
+<!--编辑文件用例-->
+
+<!--   <div id="upload6" class="tab-content ">-->
+<!--       <form action="/submittext" method="post">-->
+<!--             <label>文件名称：</label><input  name="filename" id="filename"><br>-->
+<!--             <label>用例详情：</label><textarea name="content" id="editcase"></textarea>-->
+<!--              <button   class="layui-btn layui-btn-fluid" >提交</button>-->
+<!--        </form>-->
+<!--       <form action="/submittext" method="post">-->
+<!--              <button   class="layui-btn layui-btn-fluid" >返回</button>-->
+<!--        </form>-->
+<!--  </div>-->
+
+
+<div id="upload6" class="tab-content layui-btn-group" >
+<form action="/submittext" method="post" >
+     <label>文件名称：</label><input  name="filename" id="filename"><br>
+     <label>用例详情：</label><textarea name="content" id="editcase"></textarea>
+     <button   class="layui-btn layui-btn-fluid"   >提交</button>
+</form>
+<button  class="layui-btn layui-btn-fluid"   type="button" onclick="switchTab('upload')" >返回</button>
+</div>
+
+
+<!--添加用例-->
+   <div id="upload7" class="tab-content "  >
+     <form class="layui-form" action="/addcase" method="post">
+          <div class="layui-form-item " >
+            <label class="layui-form-label">文件名称</label>
+            <div class="layui-input-block">
+              <input type="text" name="filenames" id="filenames" disabled autocomplete="off" class="layui-input">
+            </div>
+          </div>
+          <div class="layui-form-item  layui-col-md5 ">
+              <label class="layui-form-label ">系统名称</label>
+              <div class="layui-input-block ">
+                  <select id="systemname" lay-filter="demo-select-filter">
+                  <option value="">选择系统</option>
+                  <option value="srm">SRM系统</option>
+                  <option value="otd">OTD系统</option>
+                  <option value="meet">会议系统</option>
+                  <option value="crm">CRM系统</option>
+                  </select>
+                </div>
+              </div>
+
+          <div class="layui-inline">
+              <label class="layui-form-label">模块名称</label>
+              <div class="layui-input-block ">
+                  <select id="moudlename" lay-filter="demo-select-filter">
+                    <option value="">选择模块</option>
+                  </select>
+                </div>
+          </div>
+
+           <div class="layui-inline">
+              <label class="layui-form-label">功能名称</label>
+              <div class="layui-input-inline layui-input-wrap">
+                <input type="text" name="function"   autocomplete="off" placeholder="客户管理" lay-affix="clear" class="layui-input demo-phone">
+              </div>
+            </div>
+
+          <div class="layui-form-item  layui-col-md5 ">
+          <label class="layui-form-label ">角色名称</label>
+          <div class="layui-input-block ">
+              <select name="role" id="role">
+              <option value="">选择角色</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="layui-form-item ">
+            <label class="layui-form-label">接口地址</label>
+            <div class="layui-input-block">
+              <input type="text" name="url"   placeholder="/api/crm-customer/information/save" autocomplete="off" class="layui-input">
+            </div>
+            </div>
+
+          <div class="layui-form-item   layui-col-md5  ">
+            <label class="layui-form-label">请求方式</label>
+            <div class="layui-input-block">
+              <select name="method"  id="method" >
+                <option value=""></option>
+                <option value="0">POST</option>
+                <option value="1" selected>GET</option>
+                <option value="2">PUT</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="layui-form-item layui-form-text  ">
+            <label class="layui-form-label">请求体</label>
+            <div class="layui-input-block">
+              <textarea name="body"  placeholder='{
+                "customerName": "",
+                "customerType": "1",
+                "customerBrief": "三六重工",
+                "customerAll": "三六重工",
+                "taxCertificateRegistrationNo": "",
+                "ownershipNature": "privatelyOperated",
+                "legalRepresentative": "",
+                "operateStatus": 1,
+                "registerAmount": "15000000",
+                "establishTime": "2022-08-19",
+                "registerAddress": "深圳市宝安区石龙颐和路2号",
+                "status": 1,
+                "customerAttribute": 1,
+                "businessScope": "数据线，电池配件"
+              }' class="layui-textarea"></textarea>
+            </div>
+          </div>
+
+          <div class="layui-form-item layui-form-text ">
+          <label class="layui-form-label">保存参数</label>
+          <div class="layui-input-block">
+            <textarea  name="save_key"   placeholder=' - $.datas = customerId ' class="layui-textarea"></textarea>
+          </div>
+          </div>
+
+          <div class="layui-form-item layui-form-text  ">
+          <label class="layui-form-label">断言</label>
+          <div class="layui-input-block">
+            <textarea name="asserts"    placeholder='
+            - $.resp_code == 200
+            - $.resp_msg == 操作成功
+            - $.status == 200
+            - $.datas != None' class="layui-textarea"></textarea>
+          </div>
+        </div>
+
+          <div class="layui-form-item">
+            <div class="layui-input-block">
+              <button  class="layui-btn" lay-submit lay-filter="demo1">提交</button>
+              <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+            </div>
+          </div>
+
+    </form>
+</div>
+
+  <div id="upload8" class="tab-content ">
+      <table class="data-table" style="width: 100%;height: 1px;"  border="3" id="myTable8">
+          <thead>
+            <tr>
+            <th>构建系统</th>
+            <th>构建名称</th>
+            <th>构建编号</th>
+            <th>构建时间</th>
+            <th>构建状态</th>
+            <th>查看结果</th>
+            </tr>
+          </thead>
+          <tbody>
+             {% for builsresult in data['builsresult'] %}
+                    <tr>
+                        <td>{{builsresult["project"]}}</td>
+                        <td>{{builsresult["jobname"]}}</td>
+                        <td>{{builsresult["number"]}}</td>
+                        <td>{{builsresult["createTime"]}}</td>
+                        {% if builsresult["result"]%}
+                            {% if builsresult["result"] == "SUCCESS" %}
+                                <td  class="green-text hoverable" ><p class="tooltip ">成功<span class="tooltiptext">{{builsresult["detaill"]}}</span></p></td>
+                            {% elif builsresult["result"] == "UNSTABLE" %}
+                                <td  class="yellow-text hoverable" ><p class="tooltip ">不稳定<span class="tooltiptext">{{builsresult["detaill"]}}</span></p></td>
+                            {% else%}
+                                <td  class="yellow-text hoverable" ><p class="tooltip ">失败<span class="tooltiptext">{{builsresult["detaill"]}}</span></p></td>
+                            {%endif%}
+
+                         {% else%}
+                            <td  class="yellow-text hoverable" ><p class="tooltip ">处理中<span class="tooltiptext">处理中,请稍后...</span></p></td>
+                         {%endif%}
+
+                        <td>
+<!--                            <form action="getdetailfile/{{builsresult['jobname']}}/{{builsresult['number']}}" method=get  enctype=multipart/form-data>-->
+<!--                               <button type="submit" class="layui-btn layui-btn-fluid">查看结果</button>-->
+<!--                            </form>-->
+
+                            <button type="button" class="layui-btn layui-btn-fluid" id="getbuildresult" onclick="switchTab('upload9','{{builsresult['jobname']}}/{{builsresult['number']}}')" >查看结果</button>
+                        </td>
+                    </tr>
+                {% endfor %}
+          </tbody>
+      </table>
+  </div>
+   <div id="getresult" class="overlay">
+        <div class="loader"></div>
+    </div>
+<!--查看执行结果-->
+   <div id="upload9" class="tab-content">
+          <table id="dataTable2" class=" left-align-table black-border-table">
+<!--          <table class="data-table"   style="width: 100%;height: 1px;"  border="3"  id="dataTable2">-->
+           <thead>
+            <tr >
+                  <th>编号</th>
+                 <th>系统名称</th>
+                 <th>接口名称</th>
+                 <th>模块名称</th>
+                 <th>功能名称</th>
+                 <th>接口地址</th>
+                 <th>接口耗时</th>
+                 <th>创建时间</th>
+                 <th>运行主机IP</th>
+                 <th>运行主机名</th>
+                 <th>运行结果</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Data will be inserted here -->
+        </tbody>
+    </table>
+    <button    class="layui-btn layui-btn-fluid"   type="button" onclick="switchTab('upload8')" >返回</button>
+   </div>
+
+   <div id="upload10" class="tab-content ">
+     <label>文件名称：</label><input  name="filename10" id="filename10" disabled><br>
+     <label>配置详情：</label><textarea  name="editcase10" id="editcase10"></textarea>
+<!--     <button id="filename10_save" type="submit" class="layui-btn layui-btn-fluid" onclick="showConfirm('saveconfig')">提交</button>-->
+<!--      <form action="/upload" method="get">-->
+<!--         <button id="filename10_bak" type="submit" class="layui-btn layui-btn-fluid"  style="display: none;">返回</button>-->
+<!--     </form>-->
+    <button    class="layui-btn layui-btn-fluid"   type="button" onclick="switchTab('upload8')" >返回</button>
+  </div>
+
+   <div id="upload11" class="tab-content ">
+     <label>文件名称：</label><input  name="filename11" id="filename11" disabled><br>
+      <label>配置详情：</label><textarea  id="editcase11"></textarea>
+<!--      <button id="filename11_save"  type="submit"  class="layui-btn layui-btn-fluid" onclick="showConfirm('saverunconfig')">提交</button>-->
+<!--      <form action="/upload" method="get">-->
+<!--         <button id="filename11_bak" type="submit" class="layui-btn layui-btn-fluid"  style="display: none;">返回</button>-->
+<!--     </form>-->
+           <button    class="layui-btn layui-btn-fluid"   type="button" onclick="switchTab('upload8')" >返回</button>
+  </div>
+
+<!--上传用例-->
+   <div id="upload12" class="tab-content">
+              <table class="data-table"   style="width: 100%;height: 1px;"  border="3" id="myTable12">
+              <thead>
+                <tr>
+                    <th class="nosort" style="text-align:center" >文件名</th>
+                    <th  style="text-align:center">文件路径</th>
+                    <th style="text-align:center">文件大小</th>
+                    <th style="text-align:center">更新时间</th>
+                    <th style="text-align:center">文件操作</th>
+                     <th style="text-align:center">最近访问时间</th>
+                    <th style="text-align:center">最近更新时间</th>
+                </tr>
+              </thead>
+          <tbody>
+           {% for item in data['others'] %}
+            <tr>
+                <td>{{item["filename"]}}</td>
+                <td>{{item["filepath"]}}</td>
+                <td>{{item["filesize"]}}</td>
+                <td>{{item["createTime"]}}</td>
+                <td>{{item["lastaccesstime"]}}</td>
+                <td>{{item["lastupdatetime"]}}</td>
+<!--                <td><button type="button" class="layui-btn layui-btn-fluid"  onclick="showConfirm('downfile','{{item['filename']}}')">下载</button></td>-->
+
+                <td>
+                     <form action="downfile/{{item['filename']}}" method=get enctype=multipart/form-data style="display: inline-block;float:left">
+                        <button   class="layui-btn layui-btn-fluid">下载</button>
+                      </form>
+                       <form style="display: inline-block;float:left">
+                        <button    class="layui-btn layui-btn-fluid" onclick=showConfirm("delfile","{{item['filename']}}") >删除</button>
+<!--                        <button    class="layui-btn layui-btn-fluid" onclick=switchTab("upload12","{{item['filename']}}") >删除</button>-->
+                      </form>
+
+
+                </td>
+            </tr>
+        {% endfor %}
+          </tbody>
+        </table>
+          <div  class="forms-container" >
+               <input type="file" id="file-input1" class="layui-btn">
+<!--                   <button id="upload-btn1"  type="button" class="layui-btn"  style="margin-right: 50px;"   >上传文件</button>-->
+                  <button   type="button" class="layui-btn"  style="margin-right: 50px;" onclick="uploadfiles('#file-input1','status1')"  >上传文件</button>
+                <div id="status1"></div>
+            </div>
+        </div>
+
+
+
+<!--选择用例-->
+   <div id="upload13" class="tab-content">
+          <table id="dataTable3" class=" left-align-table black-border-table"  >
+<!--          <table class="data-table"   style="width: 100%;height: 1px;"  border="3"  id="dataTable2">-->
+           <thead>
+            <tr >
+                  <th  style="width:5%; text-align: center;" >编号</th>
+                  <th>系统名称</th>
+                  <th>构建名称</th>
+                  <th>用例名称</th>
+                  <th  style="width:10%; text-align: center;" ><input type="checkbox" id="selectAll" onclick="toggleAll(this)"> 全选/全不选<br><br></th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Data will be inserted here -->
+        </tbody>
+    </table>
+<!-- 蒙层特效-->
+    <button  class="layui-btn layui-btn-fluid" id="getcasename"  type="button" onclick="getselect()" >确定</button>
+    <div id="loadingOverlay" class="overlay">
+        <div class="loader"></div>
+    </div>
+<!-- 蒙层特效-->
+   </div>
+
+
+
+<script src="//unpkg.com/layui@2.9.8/dist/layui.js"></script>
+<script>
+<!--    $(document).ready(function() {-->
+<!--        function adjustTextareaHeight() {-->
+<!--            this.style.height = "auto";-->
+<!--            this.style.height = (this.scrollHeight) + "px";-->
+<!--        }-->
+
+<!--        $("textarea").on("input", adjustTextareaHeight);-->
+<!--        $("textarea").each(adjustTextareaHeight);-->
+<!--    });-->
+
+    const fileInput = document.getElementById('file-input');
+    const uploadBtn = document.getElementById('upload-btn');
+    fileInput.addEventListener('change', () => {
+          if (fileInput.value) {
+            uploadBtn.disabled = false;
+          } else {
+            uploadBtn.disabled = true;
+          }
+    });
+
+    layui.use(['element', 'layer', 'util'], function(){
+    var element = layui.element;
+    var layer = layui.layer;
+    var util = layui.util;
+    var $ = layui.$;
+
+    //头部事件
+    util.event('lay-header-event', {
+    menuLeft: function(othis){ // 左侧菜单事件
+      layer.msg('展开左侧菜单的操作', {icon: 0});
+    },
+    menuRight: function(){  // 右侧菜单事件
+      layer.open({
+        type: 1,
+        title: '更多',
+        content: '<div style="padding: 15px;">处理右侧面板的操作</div>',
+        area: ['260px', '100%'],
+        offset: 'rt', // 右上角
+        anim: 'slideLeft', // 从右侧抽屉滑出
+        shadeClose: true,
+        scrollbar: false
+      });
+    }
+    });
+    });
+    </script>
+
+        </div>
+      </div>
+      <br><br>
+    </div>
+  </div>
+
+  <div class="layui-footer" id = footer>
+    <!-- 底部固定区域 -->
+     2022 欣旺达电子股份有限公司 粤ICP备09143564号
+  </div>
+</div>
+
+</body>
+{% endblock %}

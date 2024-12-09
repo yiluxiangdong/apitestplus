@@ -1,0 +1,60 @@
+- interfaceName: MEET系统_会务管理_获取登录账号Id
+  module: 会务管理
+  function: 会务管理
+  level: critical
+  systemName: MEET系统
+  loop: 1
+  url: /api-meeting-manager/user/getUserInfo
+  method: post
+  body:
+    appCode: c46b9bc98eba4d6ba0d79da2277133e1
+    queryEnterprise: true
+    queryEnterpriseList: true
+    queryEnterpriseUserInfo: true
+    queryOrganization: true
+    queryUserRole: true
+  save_key:
+  - $.datas.userId = userId
+  - $.datas.organizationId = organizationId
+  - $.datas.organizationName = organizationName
+  asserts:
+  - $.resp_msg == SUCCESS
+  - $.datas != None
+  - $.status == 200
+  - $.resp_code == 200
+- interfaceName: MEET系统_会务管理_会议室查询
+  module: 会务管理
+  function: 会议室查询
+  level: critical
+  systemName: MEET系统
+  loop: 1
+  url: /api-meeting-manager/MeetingRoomManage/queryPage
+  method: post
+  body:
+    num: 1
+    size: 1
+    flag: 0
+    userId: '{{userId}}'
+  save_key: ''
+  asserts:
+  - $.resp_msg == SUCCESS
+  - $.datas != None
+  - $.status == 200
+  - $.resp_code == 200
+- interfaceName: MEET系统_会务管理_账单查询
+  module: 会务管理
+  function: 账单查询
+  level: critical
+  systemName: MEET系统
+  loop: 1
+  url: /api-meeting-manager/BillManagementController/queryPage
+  method: post
+  body:
+    num: 1
+    size: 1
+  save_key: ''
+  asserts:
+  - $.resp_msg == SUCCESS
+  - $.datas != None
+  - $.status == 200
+  - $.resp_code == 200

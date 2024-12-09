@@ -1,0 +1,26 @@
+- interfaceName: SRM系统_合同管理_技术协议查询yaml
+  module: 合同管理
+  function: 技术协议
+  level: critical
+  systemName: SRM系统
+  role: 采购员
+  loop: 1
+  url: /cloud-srm/api-cm/contract/contract-tech-form/listPage
+  method: post
+  body: {
+      "pageNum" : 1,
+      "pageSize" : 15,
+      "approvalStatus" : null,
+      "techContractStatus" : null,
+      "formOperateType" : null,
+      "isElecSign" : null,
+      "techFormNo" : "TA2401040004"
+  }
+  #获取返回接口的值
+  save_key:
+    - $.data.list[0].techNo = techNo #1603089673950240769
+  #将获取的值赋值给字典变量
+  asserts:
+    - $.code == R000
+    - $.message == 操作成功
+    - $.status == 200

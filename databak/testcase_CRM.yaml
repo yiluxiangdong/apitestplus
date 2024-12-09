@@ -1,0 +1,2048 @@
+- interfaceName: CRM系统_系统管理_获取销售登录人的部门机构信息
+  module: 系统管理
+  function: 系统管理
+  systemName: CRM系统
+  level: critical
+  role: 销售
+  loop: 1
+  url: /api/crm-server/user/current
+  method: post
+  body: {}
+  #获取返回接口的值
+  save_key:
+  - $.datas.userInfo.id = xs_userId
+  - $.datas.userInfo.nickname = xs_userName
+  - $..[?(@.name == "销售二部")].id = xs_deptId
+  - $..[?(@.name == "销售二部")].orgId = xs_orgId
+  #将获取的值赋值给字典变量
+  asserts:
+    - $.resp_msg == 操作成功
+    - $.datas != None
+    - $.status == 200
+    - $.resp_code == 200
+
+- interfaceName: CRM系统_系统管理_获取财务登录人的部门机构信息
+  module: 系统管理
+  function: 系统管理
+  systemName: CRM系统
+  level: critical
+  role: 财务
+  loop: 1
+  url: /api/crm-server/user/current
+  method: post
+  body: {}
+  #获取返回接口的值
+  save_key:
+  - $.datas.userInfo.id = cw_userId
+  - $.datas.userInfo.nickname = cw_userName
+  - $..[?(@.name == "财务部")].id = cw_deptId
+  - $..[?(@.name == "财务部")].orgId = cw_orgId
+  #将获取的值赋值给字典变量
+  asserts:
+    - $.resp_msg == 操作成功
+    - $.datas != None
+    - $.status == 200
+    - $.resp_code == 200
+
+
+- interfaceName: CRM系统_系统管理_获取法务登录人的部门机构信息
+  module: 系统管理
+  function: 系统管理
+  systemName: CRM系统
+  level: critical
+  role: 法务
+  loop: 1
+  url: /api/crm-server/user/current
+  method: post
+  body: {}
+  #获取返回接口的值
+  save_key:
+  - $.datas.userInfo.id = fw_userId
+  - $.datas.userInfo.nickname = fw_userName
+  - $..[?(@.name == "法务部")].id = fw_deptId
+  - $..[?(@.name == "法务部")].orgId = fw_orgId
+  #将获取的值赋值给字典变量
+  asserts:
+    - $.resp_msg == 操作成功
+    - $.datas != None
+    - $.status == 200
+    - $.resp_code == 200
+
+- interfaceName: CRM系统_系统管理_获取交付登录人的部门机构信息
+  module: 系统管理
+  function: 系统管理
+  systemName: CRM系统
+  level: critical
+  role: 交付
+  loop: 1
+  url: /api/crm-server/user/current
+  method: post
+  body: {}
+  #获取返回接口的值
+  save_key:
+  - $.datas.userInfo.id = jf_userId
+  - $.datas.userInfo.nickname = jf_userName
+  - $..[?(@.name == "交付部")].id = jf_deptId
+  - $..[?(@.name == "交付部")].orgId = jf_orgId
+  #将获取的值赋值给字典变量
+  asserts:
+    - $.resp_msg == 操作成功
+    - $.datas != None
+    - $.status == 200
+    - $.resp_code == 200
+
+- interfaceName: CRM系统_合同管理_销售人员上传合同
+  module: 合同管理
+  function: 我的合同
+  systemName: CRM系统
+  level: critical
+  role: 销售
+  loop: 1
+  url: /api/web/attachment/upload
+  method: formdata
+  body: {
+      "modelName" : "附件",
+      "modelCode": "code"
+  }
+  #获取返回接口的值
+  save_key:
+  - $.datas[0].id = contractFileId
+  #将获取的值赋值给字典变量
+  asserts:
+    - $.resp_msg == 文件上传成功!
+    - $.datas != None
+    - $.status == 200
+    - $.resp_code == 200
+
+- interfaceName: CRM系统_合同管理_销售人员新建合同保存
+  module: 合同管理
+  function: 我的合同
+  systemName: CRM系统
+  level: critical
+  role: 销售
+  loop: 1
+  url: /api/crm-contract/my-contract/save
+  method: post
+  body: {
+      "contractFileId" : "{{contractFileId}}",
+      "contractName": "新建合同{{datetimelist.datetimename}}{{randintdata}}测试-无风险",
+      "secretLevel" : "INNER",
+      "fileId" : "",
+      "customerCooperationMode" : "PROJECT_CONTRACT",
+      "importance" : "GENERAL",
+      "orgId": "{{xs_orgId}}",
+      "contractType" : "1746700096778838066",
+      "range" : "0",
+      "ouId" : [
+          "1699717342419353633"
+      ],
+      "undertakeDeptName" : "销售二部",
+      "undertakeByName" : "刘小兵",
+      "dimension" : "project",
+      "businessOpportunityId" : "1803628044363288594",
+      "undertakeByTelephone" : "18165703333",
+      "scene" : 0,
+      "undertakeDept" : "{{xs_deptId}}",
+      "undertakeDeptId" : "{{xs_deptId}}",
+      "undertakeBy" : "{{xs_userId}}",
+      "assistBy" : "",
+      "assistDeptId" : "",
+      "relatedRiskIds" : []
+  }
+  #获取返回接口的值
+  save_key: ""
+  #将获取的值赋值给字典变量
+  asserts:
+    - $.resp_msg == 操作成功
+    - $.datas != None
+    - $.status == 200
+    - $.resp_code == 200
+
+- interfaceName: CRM系统_合同管理_获取新建合同ID
+  module: 合同管理
+  function: 我的合同
+  systemName: CRM系统
+  level: critical
+  role: 销售
+  loop: 1
+  url: /api/crm-contract/my-contract/page-list
+  method: post
+  body: {
+    "size": 1,
+    "num": 1,
+    "queryType": "0",
+    "contractName": "新建合同{{datetimelist.datetimename}}{{randintdata}}测试-无风险",
+  }
+  #获取返回接口的值
+  save_key:
+    - $.datas[0].id = contractId
+  #将获取的值赋值给字典变量
+  asserts:
+    - $.resp_msg == 操作成功
+    - $.datas != None
+    - $.status == 200
+    - $.resp_code == 200
+
+- interfaceName: CRM系统_合同管理_修改合同
+  module: 合同管理
+  function: 我的合同
+  systemName: CRM系统
+  level: critical
+  role: 销售
+  loop: 1
+  url: /api/crm-contract/my-contract/update
+  method: post
+  body: {
+        "id" : "{{contractId}}",
+        "basicReq" : {
+            "orgId" : "1685834481767059497",
+            "ouId" : [
+                "1699717342419353633"
+            ],
+            "contractName" : "新建合同{{datetimelist.datetimename}}{{randintdata}}测试-无风险",
+            "contractNumber" : null,
+            "secretLevel" : "INNER",
+            "importance" : "GENERAL",
+            "range" : "0",
+            "scene" : 0,
+            "customerCooperationMode" : "PROJECT_CONTRACT",
+            "contractType" : "1746700096778838066",
+            "amount" : "500",
+            "exchangeAmount" : "600",
+            "amountUntaxed" : "600.00",
+            "exchangeAmountUntaxed" : "9000000.00",
+            "dimension" : "project",
+            "businessOpportunityId" : "1803628044363288594",
+            "currency" : "RMB",
+            "rmbExchangeRate" : "2.0",
+            "undertakeDeptName" : "销售二部",
+            "undertakeByName" : "刘小兵",
+            "assistByName" : null,
+            "undertakeDept" : "1685835580611792905",
+            "undertakeBy" : "1603089673950240769",
+            "assistBy" : null,
+            "contractFileId": "{{contractFileId}}",
+            "fileId" : "",
+            "originalId" : "",
+            "relatedRiskNames" : "",
+            "relatedRiskIds" : []
+        },
+        "ourSignInfoReq" : [
+            {
+                "id" : "1803717371408236560",
+                "signId" : "1692377671932428359",
+                "type" : "PART_B",
+                "typeName" : "乙方",
+                "signCode" : "258",
+                "signName" : "深圳市欣威智能有限公司",
+                "signAddress" : "深圳市宝安区燕山大道大地工业城",
+                "contact" : "1678291737816715266",
+                "contactName" : "合同评审员1",
+                "telephone" : "18100000000",
+                "frequency" : 1
+            }
+        ],
+        "relatedInfoReq" : [
+            {
+                "signId" : "1692448512732901394",
+                "id" : "1803717371492122625",
+                "type" : "PART_B",
+                "typeName" : "乙方",
+                "customerName" : "广州星际悦动股份有限公司",
+                "customerBrief" : "星际悦动",
+                "customerAll" : "星际悦动",
+                "erpCustomerNo" : null,
+                "customerType" : "1",
+                "taxCertificateRegistrationNo" : "91440106MA59A1TE0T",
+                "taxCertificateRegistrat" : null,
+                "registerAmount" : "36000.0",
+                "registerAddress" : "广州市天河区天河北路239号2001、2002、2003、2004、2005房",
+                "legalRepresentative" : " 陈建群",
+                "ownershipNature" : "privatelyOperated",
+                "businessScope" : "工程和技术研究和试验发展;医学研究和试验发展;技术服务、技术开发、技术咨询、技术交流、技术转让、技术推广;日用化学产品制造;个人卫生用品销售;互联网销售（除销售需要许可的商品）;日用百货销售;家用电器销售;家用电器制造;卫生用品和一次性使用医疗用品销售;第二类医疗器械销售;日用家电零售;化妆品批发;化妆品零售;第一类医疗器械销售;软件开发;企业总部管理;企业管理;供应链管理服务;信息咨询服务（不含许可类信息咨询服务）;社会经济咨询服务;企业形象策划;财务咨询;市场营销策划;信息技术咨询服务;保健食品（预包装）销售;食品互联网销售（仅销售预包装食品）;食品销售（仅销售预包装食品）;消毒剂销售（不含危险化学品）;货物进出口;技术进出口;消毒器械销售",
+                "customerAttribute" : 2,
+                "operateStatus" : 1,
+                "approvalStatus" : null,
+                "frequency" : 1
+            }
+        ]
+    }
+  #获取返回接口的值
+  save_key: ""
+  #将获取的值赋值给字典变量
+  asserts:
+    - $.resp_msg == 操作成功
+    - $.datas != None
+    - $.status == 200
+    - $.resp_code == 200
+
+- interfaceName: CRM系统_合同管理_无风险合同提交审批
+  module: 合同管理
+  function: 我的合同
+  systemName: CRM系统
+  level: critical
+  role: 销售
+  loop: 1
+  url: /api/crm-contract/risk-check/review-submit
+  method: post
+  body: {
+        "contractName" : "新建合同{{datetimelist.datetimename}}{{randintdata}}测试-无风险",
+        "riskReviewInfoName" : [
+            {
+                "deptLink" : "欣旺达电子股份有限公司-智能硬件板块-欣智旺-法务部",
+                "userName" : "刘小兵002",
+                "id" : "1684363189632487425",
+                "account" : "lxb002",
+                "position" : "",
+                "telephone" : "181****1234",
+                "keyword" : "刘小兵002-lxb002-",
+                "headImgUrl" : null,
+                "headImgId" : null,
+                "deptId" : "1718176633285439523",
+                "deptName" : "法务部",
+                "orgId" : "1685834481767059497",
+                "orgName" : "欣智旺",
+                "email" : "t****2@sunwoda.com",
+                "rowId" : "1684363189632487425"
+            },
+            {
+                "deptLink" : "欣旺达电子股份有限公司-智能硬件板块-欣智旺-财务部",
+                "userName" : "刘小兵001",
+                "id" : "1668813681720938498",
+                "account" : "lxb001",
+                "position" : "",
+                "telephone" : "136****2547",
+                "keyword" : "刘小兵001-lxb001-",
+                "headImgUrl" : null,
+                "headImgId" : null,
+                "deptId" : "1736985558099075099",
+                "deptName" : "财务部",
+                "orgId" : "1685834481767059497",
+                "orgName" : "欣智旺",
+                "email" : "5****9@qq.com",
+                "rowId" : "1668813681720938498"
+            },
+            {
+                "deptName" : "交付部",
+                "headImgId" : null,
+                "orgName" : "欣智旺",
+                "deptId" : "1802682244905697295",
+                "telephone" : "199****2323",
+                "userName" : "刘小兵003",
+                "orgId" : "1685834481767059497",
+                "deptLink" : "欣旺达电子股份有限公司-智能硬件板块-欣智旺-交付部",
+                "headImgUrl" : null,
+                "id" : "1694269295157366785",
+                "position" : "",
+                "keyword" : null,
+                "account" : "lxb003",
+                "email" : "1****3@sunwoda.com",
+                "rowId" : "1694269295157366785",
+                "title" : "刘小兵003",
+                "expanded" : false,
+                "selected" : false,
+                "checked" : false,
+                "loaded" : true,
+                "loading" : false,
+                "halfChecked" : false,
+                "dragOver" : false,
+                "dragOverGapTop" : false,
+                "dragOverGapBottom" : false,
+                "pos" : "0-0-4-4-0-1",
+                "active" : false,
+                "disabled" : false
+            }
+        ],
+        "undertakeDeptName" : "销售二部",
+        "undertakeByName" : "刘小兵",
+        "undertakeByTelephone" : "18165706145",
+        "background" : "签署借贷合同",
+        "contractId" : "{{contractId}}",
+        "undertakeDept" : "1685835580611792905",
+        "undertakeBy" : "1603089673950240769",
+        "riskReviewInfo" : [
+            {
+                "id" : "1684363189632487425",
+                "deptId" : "1718176633285439523"
+            },
+            {
+                "id" : "1668813681720938498",
+                "deptId" : "1736985558099075099"
+            },
+            {
+                "id" : "1694269295157366785",
+                "deptId" : "1802682244905697295"
+            }
+        ]
+    }
+  #获取返回接口的值
+  save_key: ""
+  #将获取的值赋值给字典变量
+  asserts:
+    - $.resp_msg == 操作成功
+    - $.datas != None
+    - $.status == 200
+    - $.resp_code == 200
+
+- interfaceName: CRM系统_合同管理_财务提交审批
+  module: 合同管理
+  function: 我的合同
+  systemName: CRM系统
+  level: critical
+  role: 财务
+  loop: 1
+  sleeptime: 2
+  url: /api/crm-contract/review-result/finish-review
+  method: post
+  body: {
+        "contractPerformanceRisk" : [],
+        "contractId" : "{{contractId}}"
+    }
+  #获取返回接口的值
+  save_key: ""
+  #将获取的值赋值给字典变量
+  asserts:
+    - $.resp_msg == 操作成功
+    - $.datas != None
+    - $.status == 200
+    - $.resp_code == 200
+
+- interfaceName: CRM系统_合同管理_法务提交审批
+  module: 合同管理
+  function: 我的合同
+  systemName: CRM系统
+  level: critical
+  role: 法务
+  loop: 1
+  url: /api/crm-contract/review-result/finish-review
+  method: post
+  body: {
+        "contractPerformanceRisk" : [],
+        "contractId" : "{{contractId}}"
+    }
+  #获取返回接口的值
+  save_key: ""
+  #将获取的值赋值给字典变量
+  asserts:
+    - $.resp_msg == 操作成功
+    - $.datas != None
+    - $.status == 200
+    - $.resp_code == 200
+
+- interfaceName: CRM系统_合同管理_交付提交审批
+  module: 合同管理
+  function: 我的合同
+  systemName: CRM系统
+  level: critical
+  role: 交付
+  loop: 1
+  url: /api/crm-contract/review-result/finish-review
+  method: post
+  body: {
+        "contractPerformanceRisk" : [
+            {
+                "control" : 1,
+                "item" : "备料延期下备料单风险",
+                "orderType" : "授权备料",
+                "tip" : "存在备料延期未转订单，请慎重审单",
+                "monitorMode" : "预警",
+                "monitorLink" : "预订单提交/审批",
+                "rule" : "备料超&5555555&天未转正式订单禁止下发备料",
+                "line0" : "这确实是风险点"
+            },
+            {
+                "control" : 1,
+                "item" : "无客供料协议下单风险",
+                "orderType" : "正式订单、授权备料",
+                "tip" : "该客户无客供料协议，请慎重下达订单或备料",
+                "monitorMode" : "预警",
+                "monitorLink" : "预订单提交/审批",
+                "rule" : "存在客供料且未签客供料协议"
+            },
+            {
+                "control" : 0,
+                "item" : "逾期款下单风险",
+                "orderType" : "正式订单、授权备料",
+                "tip" : "该客户存在逾期款，请慎重下达订单或备料",
+                "monitorMode" : "预警",
+                "monitorLink" : "预订单提交/审批",
+                "rule" : "逾期款超&&天未回款禁止下发订单/备料单"
+            },
+            {
+                "control" : 0,
+                "item" : "无单价下单风险",
+                "orderType" : "正式订单、授权备料",
+                "tip" : "该客户存在0单价，请慎重下达备料",
+                "monitorMode" : "预警",
+                "monitorLink" : "预订单提交/审批",
+                "rule" : "无单价或价格有效期外禁止下发备料，除赠品类"
+            },
+            {
+                "control" : 0,
+                "item" : "授信风险",
+                "orderType" : "",
+                "tip" : "备料延期下备料单风险",
+                "monitorMode" : "预警",
+                "monitorLink" : "额度释放申请单提交/审批",
+                "rule" : "对客户解冻授信月超&&次禁止发货"
+            },
+            {
+                "control" : 0,
+                "item" : "战略备料风险",
+                "orderType" : "战略备料",
+                "tip" : "该客户无协议约束战略备料，请慎重审批战略备料",
+                "monitorMode" : "预警",
+                "monitorLink" : "预订单提交/审批",
+                "rule" : "无协议约束战略备料"
+            },
+            {
+                "control" : 0,
+                "item" : "未授权下单风险",
+                "orderType" : "",
+                "tip" : "该客户仅能下达订单，请慎重审批订单",
+                "monitorMode" : "预警",
+                "monitorLink" : "预订单提交/审批",
+                "rule" : "该客户可合作订单类型：&&"
+            }
+        ],
+        "contractId" : "{{contractId}}"
+    }
+  #获取返回接口的值
+  save_key: ""
+  #将获取的值赋值给字典变量
+  asserts:
+    - $.resp_msg == 操作成功
+    - $.datas != None
+    - $.status == 200
+    - $.resp_code == 200
+
+- interfaceName: CRM系统_合同管理_销售提交审批到流程引擎
+  module: 合同管理
+  function: 我的合同
+  systemName: CRM系统
+  level: critical
+  role: 销售
+  loop: 1
+  url: /api/crm-contract/review/submit-approve
+  method: post
+  body: { "contractId" : "{{contractId}}"}
+  #获取返回接口的值
+  save_key: ""
+  #将获取的值赋值给字典变量
+  asserts:
+    - $.resp_msg == 操作成功
+    - $.datas != None
+    - $.status == 200
+    - $.resp_code == 200
+
+
+- interfaceName: CRM系统_合同管理_销售人员新建有风险合同保存
+  module: 合同管理
+  function: 我的合同
+  systemName: CRM系统
+  level: critical
+  role: 销售
+  loop: 1
+  url: /api/crm-contract/my-contract/save
+  method: post
+  body: {
+      "contractFileId" : "{{contractFileId}}",
+      "contractName": "新建合同{{datetimelist.datetimename}}{{randintdata}}测试-有风险",
+      "secretLevel" : "INNER",
+      "fileId" : "",
+      "customerCooperationMode" : "PROJECT_CONTRACT",
+      "importance" : "GENERAL",
+      "orgId": "{{xs_orgId}}",
+      "contractType" : "1746700096778838066",
+      "range" : "0",
+      "ouId" : [
+          "1699717342419353633"
+      ],
+      "undertakeDeptName" : "销售二部",
+      "undertakeByName" : "刘小兵",
+      "dimension" : "project",
+      "businessOpportunityId" : "1803628044363288594",
+      "undertakeByTelephone" : "18165703333",
+      "scene" : 0,
+      "undertakeDept" : "{{xs_deptId}}",
+      "undertakeDeptId" : "{{xs_deptId}}",
+      "undertakeBy" : "{{xs_userId}}",
+      "assistBy" : "",
+      "assistDeptId" : "",
+      "relatedRiskIds" : []
+  }
+  #获取返回接口的值
+  save_key: ""
+  #将获取的值赋值给字典变量
+  asserts:
+    - $.resp_msg == 操作成功
+    - $.datas != None
+    - $.status == 200
+    - $.resp_code == 200
+
+- interfaceName: CRM系统_合同管理_获取新建有风险合同ID
+  module: 合同管理
+  function: 我的合同
+  systemName: CRM系统
+  level: critical
+  role: 销售
+  loop: 1
+  url: /api/crm-contract/my-contract/page-list
+  method: post
+  body: {
+    "size": 1,
+    "num": 1,
+    "queryType": "0",
+    "contractName": "新建合同{{datetimelist.datetimename}}{{randintdata}}测试-有风险",
+  }
+  #获取返回接口的值
+  save_key:
+    - $.datas[0].id = contractId1
+  #将获取的值赋值给字典变量
+  asserts:
+    - $.resp_msg == 操作成功
+    - $.datas != None
+    - $.status == 200
+    - $.resp_code == 200
+
+- interfaceName: CRM系统_合同管理_修改有风险合同
+  module: 合同管理
+  function: 我的合同
+  systemName: CRM系统
+  level: critical
+  role: 销售
+  loop: 1
+  url: /api/crm-contract/my-contract/update
+  method: post
+  body: {
+        "id" : "{{contractId1}}",
+        "basicReq" : {
+            "orgId" : "1685834481767059497",
+            "ouId" : [
+                "1699717342419353633"
+            ],
+            "contractName" : "新建合同{{datetimelist.datetimename}}{{randintdata}}测试-有风险",
+            "contractNumber" : null,
+            "secretLevel" : "INNER",
+            "importance" : "GENERAL",
+            "range" : "0",
+            "scene" : 0,
+            "customerCooperationMode" : "PROJECT_CONTRACT",
+            "contractType" : "1746700096778838066",
+            "amount" : "500",
+            "exchangeAmount" : "600",
+            "amountUntaxed" : "600.00",
+            "exchangeAmountUntaxed" : "9000000.00",
+            "dimension" : "project",
+            "businessOpportunityId" : "1803628044363288594",
+            "currency" : "RMB",
+            "rmbExchangeRate" : "2.0",
+            "undertakeDeptName" : "销售二部",
+            "undertakeByName" : "刘小兵",
+            "assistByName" : null,
+            "undertakeDept" : "1685835580611792905",
+            "undertakeBy" : "1603089673950240769",
+            "assistBy" : null,
+            "contractFileId": "{{contractFileId}}",
+            "fileId" : "",
+            "originalId" : "",
+            "relatedRiskNames" : "",
+            "relatedRiskIds" : []
+        },
+        "ourSignInfoReq" : [
+            {
+                "id" : "1803717371408236560",
+                "signId" : "1692377671932428359",
+                "type" : "PART_B",
+                "typeName" : "乙方",
+                "signCode" : "258",
+                "signName" : "深圳市欣威智能有限公司",
+                "signAddress" : "深圳市宝安区燕山大道大地工业城",
+                "contact" : "1678291737816715266",
+                "contactName" : "合同评审员1",
+                "telephone" : "18100000000",
+                "frequency" : 1
+            }
+        ],
+        "relatedInfoReq" : [
+            {
+                "signId" : "1692448512732901394",
+                "id" : "1803717371492122625",
+                "type" : "PART_B",
+                "typeName" : "乙方",
+                "customerName" : "广州星际悦动股份有限公司",
+                "customerBrief" : "星际悦动",
+                "customerAll" : "星际悦动",
+                "erpCustomerNo" : null,
+                "customerType" : "1",
+                "taxCertificateRegistrationNo" : "91440106MA59A1TE0T",
+                "taxCertificateRegistrat" : null,
+                "registerAmount" : "36000.0",
+                "registerAddress" : "广州市天河区天河北路239号2001、2002、2003、2004、2005房",
+                "legalRepresentative" : " 陈建群",
+                "ownershipNature" : "privatelyOperated",
+                "businessScope" : "工程和技术研究和试验发展;医学研究和试验发展;技术服务、技术开发、技术咨询、技术交流、技术转让、技术推广;日用化学产品制造;个人卫生用品销售;互联网销售（除销售需要许可的商品）;日用百货销售;家用电器销售;家用电器制造;卫生用品和一次性使用医疗用品销售;第二类医疗器械销售;日用家电零售;化妆品批发;化妆品零售;第一类医疗器械销售;软件开发;企业总部管理;企业管理;供应链管理服务;信息咨询服务（不含许可类信息咨询服务）;社会经济咨询服务;企业形象策划;财务咨询;市场营销策划;信息技术咨询服务;保健食品（预包装）销售;食品互联网销售（仅销售预包装食品）;食品销售（仅销售预包装食品）;消毒剂销售（不含危险化学品）;货物进出口;技术进出口;消毒器械销售",
+                "customerAttribute" : 2,
+                "operateStatus" : 1,
+                "approvalStatus" : null,
+                "frequency" : 1
+            }
+        ]
+    }
+  #获取返回接口的值
+  save_key: ""
+  #将获取的值赋值给字典变量
+  asserts:
+    - $.resp_msg == 操作成功
+    - $.datas != None
+    - $.status == 200
+    - $.resp_code == 200
+
+- interfaceName: CRM系统_合同管理_有风险合同提交审批
+  module: 合同管理
+  function: 我的合同
+  systemName: CRM系统
+  level: critical
+  role: 销售
+  loop: 1
+  url: /api/crm-contract/risk-check/review-submit
+  method: post
+  body: {
+        "contractName" : "新建合同{{datetimelist.datetimename}}{{randintdata}}测试-有风险",
+        "riskReviewInfoName" : [
+            {
+                "deptLink" : "欣旺达电子股份有限公司-智能硬件板块-欣智旺-法务部",
+                "userName" : "刘小兵002",
+                "id" : "1684363189632487425",
+                "account" : "lxb002",
+                "position" : "",
+                "telephone" : "181****1234",
+                "keyword" : "刘小兵002-lxb002-",
+                "headImgUrl" : null,
+                "headImgId" : null,
+                "deptId" : "1718176633285439523",
+                "deptName" : "法务部",
+                "orgId" : "1685834481767059497",
+                "orgName" : "欣智旺",
+                "email" : "t****2@sunwoda.com",
+                "rowId" : "1684363189632487425"
+            },
+            {
+                "deptLink" : "欣旺达电子股份有限公司-智能硬件板块-欣智旺-财务部",
+                "userName" : "刘小兵001",
+                "id" : "1668813681720938498",
+                "account" : "lxb001",
+                "position" : "",
+                "telephone" : "136****2547",
+                "keyword" : "刘小兵001-lxb001-",
+                "headImgUrl" : null,
+                "headImgId" : null,
+                "deptId" : "1736985558099075099",
+                "deptName" : "财务部",
+                "orgId" : "1685834481767059497",
+                "orgName" : "欣智旺",
+                "email" : "5****9@qq.com",
+                "rowId" : "1668813681720938498"
+            },
+            {
+                "deptName" : "交付部",
+                "headImgId" : null,
+                "orgName" : "欣智旺",
+                "deptId" : "1802682244905697295",
+                "telephone" : "199****2323",
+                "userName" : "刘小兵003",
+                "orgId" : "1685834481767059497",
+                "deptLink" : "欣旺达电子股份有限公司-智能硬件板块-欣智旺-交付部",
+                "headImgUrl" : null,
+                "id" : "1694269295157366785",
+                "position" : "",
+                "keyword" : null,
+                "account" : "lxb003",
+                "email" : "1****3@sunwoda.com",
+                "rowId" : "1694269295157366785",
+                "title" : "刘小兵003",
+                "expanded" : false,
+                "selected" : false,
+                "checked" : false,
+                "loaded" : true,
+                "loading" : false,
+                "halfChecked" : false,
+                "dragOver" : false,
+                "dragOverGapTop" : false,
+                "dragOverGapBottom" : false,
+                "pos" : "0-0-4-4-0-1",
+                "active" : false,
+                "disabled" : false
+            }
+        ],
+        "undertakeDeptName" : "销售二部",
+        "undertakeByName" : "刘小兵",
+        "undertakeByTelephone" : "18165706145",
+        "background" : "签署借贷合同",
+        "contractId" : "{{contractId1}}",
+        "undertakeDept" : "1685835580611792905",
+        "undertakeBy" : "1603089673950240769",
+        "riskReviewInfo" : [
+            {
+                "id" : "1684363189632487425",
+                "deptId" : "1718176633285439523"
+            },
+            {
+                "id" : "1668813681720938498",
+                "deptId" : "1736985558099075099"
+            },
+            {
+                "id" : "1694269295157366785",
+                "deptId" : "1802682244905697295"
+            }
+        ]
+    }
+  #获取返回接口的值
+  save_key: ""
+  #将获取的值赋值给字典变量
+  asserts:
+    - $.resp_msg == 操作成功
+    - $.datas != None
+    - $.status == 200
+    - $.resp_code == 200
+
+- interfaceName: CRM系统_合同管理_获取风险基准组ID
+  module: 合同管理
+  function: 我的合同
+  systemName: CRM系统
+  level: critical
+  role: 财务
+  loop: 1
+  url: /api/crm-contract/risk-standard-group/getRiskStandardGroup
+  method: post
+  body: {
+    "deptId": "{{cw_deptId}}",
+    "orgId": "{{cw_orgId}}"
+  }
+  #获取返回接口的值
+  save_key:
+    - $..[?(@.standardGroupName == "欣旺达合同测试-财务")].id = RiskStandardGroupId
+  #将获取的值赋值给字典变量
+  asserts:
+    - $.resp_msg == 操作成功
+    - $.datas != None
+    - $.status == 200
+    - $.resp_code == 200
+
+- interfaceName: CRM系统_合同管理_获取风险ID
+  module: 合同管理
+  function: 我的合同
+  systemName: CRM系统
+  level: critical
+  role: 财务
+  loop: 1
+  sleeptime: 3
+  url: /api/crm-contract/risk-check/intelligent-review
+  method: post
+  body: {
+    "contractId": "{{contractId1}}",
+    "standardGroupId": "{{RiskStandardGroupId}}"
+  }
+  #获取返回接口的值
+  save_key:
+    - $..[*].id = RiskList
+  #将获取的值赋值给字典变量
+  asserts:
+    - $.resp_msg == 操作成功
+    - $.datas != None
+    - $.status == 200
+    - $.resp_code == 200
+
+- interfaceName: CRM系统_线索管理_获取适用OU
+  module: 线索管理
+  function: 线索公海池
+  systemName: CRM系统
+  level: critical
+  loop: 1
+  role: 销售
+  url: /api/crm-system/dept/find-ou/{{xs_orgId}}
+  method: get
+  body: {}
+  asserts:
+  - $.resp_code == 200
+  - $.resp_msg == 操作成功
+  - $.status == 200
+  - $.datas != None
+  save_key:
+  - $..[*].id = ouid* # *表示取全部的值
+  - $..[*].ouName = ouName* # *表示取全部的值
+  - $..[*].ouCode = ouCode* # *表示取全部的值
+
+- interfaceName: CRM系统_客户管理_新建企业库
+  module: 客户管理
+  function: 企业库
+  systemName: CRM系统
+  level: critical
+  loop: 1
+  role: 销售
+  method: post
+  url: /api/crm-customer/information/save
+  body:
+    businessScope: 数据线，电池配件
+    customerAll: 三六重工
+    customerAttribute: 1
+    customerBrief: 三六重工
+    customerName: '{{customerName}}'
+    customerType: '1'
+    establishTime: '2022-08-19'
+    legalRepresentative: '{{contactsName}}'
+    operateStatus: 1
+    ownershipNature: privatelyOperated
+    registerAddress: 深圳市宝安区石龙颐和路2号
+    registerAmount: '15000000'
+    status: 1
+    taxCertificateRegistrationNo: '{{datetimelist.datetimename}}{{datetimelist.randintdata}}'
+  asserts:
+    - $.resp_code == 200
+    - $.resp_msg == 操作成功
+    - $.status == 200
+    - $.datas != None
+  save_key:
+  - $.datas = customerId
+
+- interfaceName: CRM系统_客户管理_添加联系人
+  function: 客户联系人
+  systemName: CRM系统
+  level: critical
+  loop: 1
+  module: 客户管理
+  role: 销售
+  url: /api/crm-customer/customer-contacts/save
+  method: post
+  body:
+    businessCardUrl: https://crm-uat.sunwoda.com/file/crm/modelCode:customer/contacts/c3d9110f4a32c849089f46f03ed71ac9.png
+    contactsName: '{{contactsName}}'
+    customerId: '{{customerId}}'
+    deptName: 市场部
+    duties: 市场经理
+    fileName: 参展方2.png
+    fileNameIds:
+    - '696088791089156096'
+    gender: 0
+    mail: '{{email}}'
+    orgId: '{{orgId}}'
+    orgName: '{{deptName}}'
+    responsiblePerson: '{{nickname}}'
+    status: 1
+    telephone1: '{{phone}}'
+    weDeptNames: '{{deptName}}'
+  asserts:
+    - $.resp_code == 200
+    - $.resp_msg == 操作成功
+    - $.status == 200
+    - $.datas != None
+  save_key:
+  - $.datas = contactsId
+
+
+
+- interfaceName: CRM系统_客户管理_客户建档
+  function: 客户建档
+  systemName: CRM系统
+  level: critical
+  loop: 1
+  method: post
+  module: 客户管理
+  role: 销售
+  url: /api/crm-customer/base-information/temp-save
+  body:
+    contractSign:
+      businessLicenseFileId:
+      - '762852767332044800'
+      contractStatus: 2
+      customerContractFileId: []
+      failRemarks: 招标中
+      invoicingInformationFileId:
+      - '762852794196561920'
+      otherFileId: []
+    creditScore:
+      comprehensiveLevel: C
+      fullScoreTotal: 100
+      salesForecast:
+      - month1: 3000
+        month10: 3000
+        month11: 3000
+        month12: 3000
+        month2: 3000
+        month3: 3000
+        month4: 3000
+        month5: 3000
+        month6: 3000
+        month7: 3000
+        month8: 3000
+        month9: 3000
+        typeTab: 销量
+      - month1: 6000
+        month10: 6000
+        month11: 6000
+        month12: 6000
+        month2: 6000
+        month3: 6000
+        month4: 6000
+        month5: 6000
+        month6: 6000
+        month7: 6000
+        month8: 6000
+        month9: 6000
+        typeTab: 金额
+      salesScoreTotal: 22
+      templateId: '1734812906058338380'
+      templateScore:
+      - createBy: '1603089673950240769'
+        createTime: '2023-12-13 13:50:06'
+        evaluation: 年纳税额
+        itemName: 年纳税额
+        salesInitialRating: 46
+        score: '60'
+        templateDetailedId: '1734812921585651774'
+        tplId: '1734812906058338380'
+        type: 信用记录评估
+        updateBy: null
+      - createBy: '1603089673950240769'
+        createTime: '2023-12-13 13:50:06'
+        evaluation: 注册资金
+        itemName: 注册资金
+        salesInitialRating: 32
+        score: '40'
+        templateDetailedId: '1734812921594040358'
+        tplId: '1734812906058338380'
+        type: 财务指标评估
+        updateBy: null
+    creditStanding:
+      bankCredit: 按期付银行借款本息
+      customerAdvantages: 产量大，质量可靠
+      customerInferiority: 暂无
+      customerOrChannel: 广交会
+      customsInformationFileId:
+      - '762852971728867328'
+      inherentAssets:
+      - developersNumber: 200
+        isComplianceLawsAndRegulations: 1
+        isCoreTechnology: 1
+        isDevelopmentOrganization: 1
+        isLitigationEvents: 0
+        isOwnPropertyRights: 1
+        managementPersonnelNumber: 100
+        officeArea: 2000
+        plantArea: 20000
+        workersNumber: 2000
+      isAdverseEvents: 0
+      isGambling: 0
+      isLitigationEvents: 0
+      isPassCustomsSecurityPlans: 2
+      lastYearSales: '30000000'
+      majorSuppliers: 宁德时代
+      marketShareProducts: 80%
+      needBuyProducts: 电池模组
+      otherPaymentCreditSuppliers: 存在逾期1个月以内货款记录
+      positionInIndustry: 行业头部企业
+      productMarketSentiment: 畅销全球
+      topThreeRankingsInIndustry: 行业第一龙头企业
+    customerId: '{{customerId}}'
+    customerLimit:
+    - ouCode: '510'
+      receivableCreditLimit: '1000'
+      transactionCurrency: CNY
+    - ouCode: '512'
+      receivableCreditLimit: '2000'
+      transactionCurrency: CNY
+    - ouCode: '305'
+      receivableCreditLimit: '3000'
+      transactionCurrency: CNY
+    - ouCode: '303'
+      receivableCreditLimit: '4000'
+      transactionCurrency: CNY
+    customerRegion: 东北地区
+    deptId: '{{deptId}}'
+    information:
+      businessScope: 数据线，电池配件
+      customerAll: 三六重工
+      customerAttribute: 1
+      customerBrief: 三六重工
+      customerName: '{{customerName}}'
+      customerType: '1'
+      erpCustomerNo: null
+      id: '{{customerId}}'
+      legalRepresentative: '{{contactsName}}'
+      operateStatus: 1
+      ownershipNature: privatelyOperated
+      registerAddress: 深圳市宝安区石龙颐和路2号
+      registerAmount: '15000000.00'
+      taxCertificateRegistrationNo: '{{randintdata}}'
+    isRetailCustomer: 1
+    isTempCustomer: 1
+    orderPerformCommissionerName:
+    - account: 220****0095
+      deptId: '{{deptId}}'
+      deptLink: 欣旺达电子股份有限公司-智能硬件板块-欣智旺-销售部-销售二部
+      deptName: '{{deptName}}'
+      email: l****g@sunwoda.com
+      headImgId: '689553173827817472'
+      headImgUrl: https://crm-uat.sunwoda.com/file/crm/code/93290bdaaa72ca6206f76b293d4bbf51.png
+      id: '{{userId}}'
+      key: '16858355806117929051603089673950240769'
+      keyId: '16858355806117929051603089673950240769'
+      keyword: null
+      orgId: '{{orgId}}'
+      orgName: 欣智旺
+      position: 高级工程师
+      rowId: '{{userId}}'
+      telephone: 181****6145
+      title: 刘小兵
+      userName: 刘小兵
+    orderPerformCommissionerNo: '{{userId}}'
+    orgId: '{{orgId}}'
+    orgName: 销售二部
+    ouInformation:
+    - acquiringAddresss:
+      - addressInfoId: '1706254074891883958'
+        bankAccount: 912345878456745674{{randintdata}}
+        bankCountry: 中国
+        bankCountryCode: CN
+        bankPartyId: '115734'
+        contacts: '{{contactsName}}'
+        contactsId: '{{contactsId}}'
+        email: '{{email}}'
+        headBankAme: "\t平安银行深圳三联天彩支行"
+        phone: '{{phone}}'
+        settlementMethod: 发票30天
+        status: 1
+        taxRate: 进项税13%
+        transactionCurrency: CNY
+      addressInfoList:
+      - address: 中关村66号
+        city: 海淀区
+        country: 中国
+        countryCode: CN
+        id: '1706254074891883958'
+        province: 北京市
+      checkCycleCode: '25'
+      isSame: 2
+      ouAddresss:
+      - addressInfoId: '1706254074891883958'
+        contacts: '{{contactsName}}'
+        contactsId: '{{contactsId}}'
+        email: '{{email}}'
+        phone: '{{phone}}'
+        status: 1
+      ouCode: '510'
+      paymentBasis: 增值税发票
+      paymentMethod: 电汇
+      regularCollectionDate: 1
+      regularReconciliationDate: 2
+    - acquiringAddresss:
+      - addressInfoId: '1706254197721475303'
+        bankAccount: 89978878456745674{{randintdata}}
+        bankCountry: 中国
+        bankCountryCode: CN
+        bankPartyId: '112390'
+        contacts: '{{contactsName}}'
+        contactsId: '{{contactsId}}'
+        email: '{{email}}'
+        headBankAme: Bank Of China (Hong Kong) Limited
+        phone: '{{phone}}'
+        settlementMethod: 发票月结100
+        status: 1
+        taxRate: CGST_IN_0.125%
+        transactionCurrency: CNY
+      addressInfoList:
+      - address: 酒仙桥55号
+        city: 朝阳区
+        country: 中国
+        countryCode: CN
+        id: '1706254197721475303'
+        province: 北京市
+      checkCycleCode: '25'
+      isSame: 2
+      ouAddresss:
+      - addressInfoId: '1706254197721475303'
+        contacts: '{{contactsName}}'
+        contactsId: '{{contactsId}}'
+        email: '{{email}}'
+        phone: '{{phone}}'
+        status: 1
+      ouCode: '512'
+      paymentBasis: 增值税发票
+      paymentMethod: 电汇
+      regularCollectionDate: 1
+      regularReconciliationDate: 2
+    - acquiringAddresss:
+      - addressInfoId: '1706254372916292002'
+        bankAccount: 69958878456745674{{randintdata}}
+        bankCountry: 中国
+        bankCountryCode: CN
+        bankPartyId: '237376'
+        contacts: '{{contactsName}}'
+        contactsId: '{{contactsId}}'
+        email: '{{email}}'
+        headBankAme: 上海浦东发展银行股份有限公司武汉江岸支行
+        phone: '{{phone}}'
+        settlementMethod: 发票30天
+        status: 1
+        taxRate: IGST_OUT_3%
+        transactionCurrency: CNY
+      addressInfoList:
+      - address: 工业路33号
+        city: 河东区
+        country: 中国
+        countryCode: CN
+        id: '1706254372916292002'
+        province: 天津市
+      checkCycleCode: '25'
+      isSame: 2
+      ouAddresss:
+      - addressInfoId: '1706254372916292002'
+        contacts: '{{contactsName}}'
+        contactsId: '{{contactsId}}'
+        email: '{{email}}'
+        phone: '{{phone}}'
+        status: 1
+      ouCode: '305'
+      paymentBasis: 增值税发票
+      paymentMethod: 电汇
+      regularCollectionDate: 1
+      regularReconciliationDate: 2
+    - acquiringAddresss:
+      - addressInfoId: '1706254497354837462'
+        bankAccount: 62258878456745674{{randintdata}}
+        bankCountry: 中国
+        bankCountryCode: CN
+        bankPartyId: '183664'
+        contacts: '{{contactsName}}'
+        contactsId: '{{contactsId}}'
+        email: '{{email}}'
+        headBankAme: 东莞农村商业建设股份有限公司
+        phone: '{{phone}}'
+        settlementMethod: 发票月结105
+        status: 1
+        taxRate: 销项税内含4%
+        transactionCurrency: CNY
+      addressInfoList:
+      - address: 矿业路99号
+        city: 长春市
+        country: 中国
+        countryCode: CN
+        id: '1706254497354837462'
+        province: 吉林省
+      checkCycleCode: '25'
+      isSame: 2
+      ouAddresss:
+      - addressInfoId: '1706254497354837462'
+        contacts: '{{contactsName}}'
+        contactsId: '{{contactsId}}'
+        email: '{{email}}'
+        phone: '{{phone}}'
+        status: 1
+      ouCode: '303'
+      paymentBasis: 增值税发票
+      paymentMethod: 电汇
+      regularCollectionDate: 1
+      regularReconciliationDate: 2
+    saleName: '{{nickname}}'
+    saleNo: '{{userId}}'
+    workshopOfficeAddress: 深圳市宝安区颐和路2号
+  save_key: ''
+  asserts:
+    - $.resp_code == 200
+    - $.resp_msg == 操作成功
+    - $.status == 200
+    - $.datas != None
+
+
+- interfaceName: CRM系统_商机管理_获取商机编码
+  function: 商机跟进
+  systemName: CRM系统
+  level: critical
+  loop: 1
+  method: post
+  module: 商机管理
+  role: 销售
+  url: /api/crm-opportunity/opp-stage/getFieldDefaultValue
+  body:
+    key: oppCode
+  asserts:
+    - $.resp_code == 200
+    - $.resp_msg == 操作成功
+    - $.status == 200
+    - $.datas != None
+  save_key:
+  - $.datas.oppCode = oppCode
+
+
+- interfaceName: CRM系统_商机管理_获取商机规则ID
+  function: 商机跟进
+  systemName: CRM系统
+  level: critical
+  loop: 1
+  method: post
+  module: 商机管理
+  role: 销售
+  url: /api/crm-opportunity/phase-rule/page-list
+  body:
+    deleted: '0'
+    num: 1
+    size: 20
+    status: 1
+  asserts:
+    - $.resp_code == 200
+    - $.resp_msg == 操作成功
+    - $.status == 200
+    - $.datas != None
+  save_key:
+  - $..datas[?(@.ruleName== "商机测试1102")].productType = productType
+  - $..datas[?(@.ruleName== "商机测试1102")].productTypeName = productTypeName
+
+
+- interfaceName: CRM系统_合同管理_查询客户信息
+  function: 我的合同
+  systemName: CRM系统
+  level: critical
+  loop: 1
+  method: post
+  module: 合同管理
+  role: 销售
+  url: /api/crm-customer/information/page-list
+  body:
+    customerName: '{{customerName}}'
+    num: 1
+    size: 20
+  save_key:
+  - $.datas[0].id = signId
+  - $.datas[0].customerBrief = customerBrief
+  - $.datas[0].customerAll = customerAll
+  - $.datas[0].taxCertificateRegistrationNo = taxCertificateRegistrationNo
+  asserts:
+    - $.resp_code == 200
+    - $.resp_msg == 操作成功
+    - $.status == 200
+    - $.datas != None
+
+
+- interfaceName: CRM系统_客户管理_查询已发布的版本库
+  function: 客户产品库版本
+  systemName: CRM系统
+  level: critical
+  loop: 1
+  method: post
+  module: 客户管理
+  role: 销售
+  url: /api/crm-customer/product-version/page-list
+  body:
+    num: 1
+    size: 20
+  save_key:
+  - $..datas[?(@.statusName =="已发布" )].id = versionId
+  - $..datas[?(@.statusName =="已发布" )].managerId = managerId
+  asserts:
+    - $.resp_code == 200
+    - $.resp_msg == 操作成功
+    - $.status == 200
+    - $.datas != None
+
+
+- interfaceName: CRM系统_客户管理_查询复制版本库ID
+  function: 客户产品库版本
+  systemName: CRM系统
+  level: critical
+  loop: 1
+  method: post
+  module: 客户管理
+  role: 销售
+  url: /api/crm-customer/product-version/page-list
+  body:
+    num: 1
+    size: 20
+  save_key:
+  - $..datas[?(@.statusName =="新建" )].id = newversionId
+  asserts:
+    - $.resp_code == 200
+    - $.resp_msg == 操作成功
+    - $.status == 200
+    - $.datas != None
+
+- interfaceName: CRM系统_客户管理_产品库新增客户
+  function: 客户产品库版本
+  systemName: CRM系统
+  level: critical
+  loop: 1
+  method: post
+  module: 客户管理
+  role: 销售
+  url: /api/crm-customer/product-library/save
+  body:
+    coreCompetitorReqList: []
+    customerCode: CRM002
+    customerId: '{{customerId}}'
+    customerName: '{{customerName}}'
+    customerStatus: 0
+    orgId: '{{orgId}}'
+    orgName: '{{orgName}}'
+    priceRange: '50000'
+    productModel: CRM87954665
+    productType: 电池
+    salePredictionReqList: []
+    supplierReqList: []
+    versionId: '{{newversionId}}'
+  save_key: ''
+  asserts:
+    - $.resp_code == 200
+    - $.resp_msg == 操作成功
+    - $.status == 200
+    - $.datas != None
+
+- interfaceName: CRM系统_客户管理_产品库发布
+  function: 客户产品库版本
+  systemName: CRM系统
+  level: critical
+  loop: 1
+  method: post
+  module: 客户管理
+  role: 销售
+  url: /api/crm-customer/product-version/publish
+  body:
+  - '{{newversionId}}'
+  save_key: ''
+  asserts:
+    - $.resp_code == 200
+    - $.resp_msg == 操作成功
+    - $.status == 200
+    - $.datas != None
+
+- interfaceName: CRM系统_市场管理_授权类别
+  function: 授权管理
+  systemName: CRM系统
+  level: critical
+  loop: 1
+  method: post
+  module: 市场管理
+  role: 销售
+  url: /api/crm-info/type/tree
+  body:
+    orgId: '{{orgId}}'
+  save_key:
+  - $..children[?(@.name == "自动化测试专用")].id =typeid
+  asserts:
+    - $.resp_code == 200
+    - $.resp_msg == 操作成功
+    - $.status == 200
+    - $.datas != None
+
+
+- interfaceName: CRM系统_市场管理_查询全部资讯
+  function: 咨询查阅
+  systemName: CRM系统
+  level: critical
+  loop: 1
+  method: post
+  module: 市场管理
+  role: 销售
+  url: /api/crm-info/publish/list
+  body:
+    num: 1
+    size: 20
+  save_key: ''
+  asserts:
+    - $.resp_code == 200
+    - $.resp_msg == 操作成功
+    - $.status == 200
+    - $.datas != None
+
+
+- interfaceName: CRM系统_市场管理_获取类别详情
+  function: 授权管理
+  systemName: CRM系统
+  level: critical
+  loop: 1
+  method: get
+  module: 市场管理
+  role: 销售
+  url: /api/crm-info/type/{{typeid}}
+  body: {}
+  save_key: ''
+  asserts:
+    - $.resp_code == 200
+    - $.resp_msg == 操作成功
+    - $.status == 200
+    - $.datas != None
+
+- interfaceName: CRM系统_市场管理_上传封面
+  function: 发布管理
+  systemName: CRM系统
+  level: critical
+  loop: 1
+  method: formpng
+  module: 市场管理
+  role: 销售
+  url: /api/web/attachment/upload
+  body:
+    modelCode: code
+    modelName: 封面
+  save_key:
+  - $.datas[0].id = coverId
+  - $.datas[0].fileUrl = coverUrl
+  asserts:
+    - $.resp_code == 200
+    - $.resp_msg == 文件上传成功!
+    - $.status == 200
+    - $.datas != None
+
+- interfaceName: CRM系统_市场管理_发布管理暂存
+  function: 发布管理
+  systemName: CRM系统
+  level: critical
+  loop: 2
+  method: post
+  module: 市场管理
+  role: 销售
+  url: /api/crm-info/publish/edit
+  body:
+    attachmentId: ''
+    attachmentInfo:
+    - id: '{{coverId}}'
+      name: 封面.png
+      numberId: '1'
+      uid: '{{coverId}}'
+      url: '{{coverUrl}}'
+    contents: ''
+    coverId: '{{coverId}}'
+    coverUrl: '{{coverUrl}}'
+    emailNotice: true
+    emailTemplate: ''
+    generatePdf: false
+    groupReqs:
+    - objectLabel: leader
+      orgAuth: []
+      userAuth:
+      - '1668813681720938498'
+    - objectLabel: normal
+      orgAuth: []
+      userAuth:
+      - '1603089673950240769'
+    id: null
+    orgId: '{{orgId}}'
+    outsideUserReqs:
+    - createBy: null
+      createByName: null
+      createTime: null
+      deleted: null
+      email: liuxiaobing@sunwoda.com
+      id: '1717101093565575257'
+      objectLabel: secretary
+      systemCode: null
+      tenantId: null
+      updateBy: null
+      updateByName: null
+      updateTime: null
+      userName: 刘小兵
+    - createBy: null
+      createByName: null
+      createTime: null
+      deleted: null
+      email: liuxiaobing@qq.com
+      id: '1718870682466463752'
+      objectLabel: normal
+      systemCode: null
+      tenantId: null
+      updateBy: null
+      updateByName: null
+      updateTime: null
+      userName: test
+    readAnswer: true
+    reprintArticle: false
+    title: 发布资讯{{datetimelist.datetimename}}
+    typeId: '{{typeid}}'
+  save_key: ''
+  asserts:
+    - $.resp_code == 200
+    - $.resp_msg == 操作成功
+    - $.status == 200
+    - $.datas == 保存草稿成功!
+
+- interfaceName: CRM系统_市场管理_查询资讯ID
+  function: 咨询查阅
+  systemName: CRM系统
+  level: critical
+  loop: 1
+  method: post
+  module: 市场管理
+  role: 销售
+  url: /api/crm-info/publish/list
+  body:
+    num: 1
+    size: 10
+    status: 0
+  save_key:
+  - $.datas[0].id = infoId
+  - $.datas[1].id = infoId_1
+  asserts:
+    - $.resp_code == 200
+    - $.resp_msg == 操作成功
+    - $.status == 200
+    - $.datas != None
+
+- interfaceName: CRM系统_市场管理_删除资讯
+  function: 发布管理
+  systemName: CRM系统
+  level: critical
+  loop: 1
+  method: post
+  module: 市场管理
+  role: 销售
+  url: /api/crm-info/publish/delete
+  body:
+  - '{{infoId}}'
+  save_key: ''
+  asserts:
+    - $.resp_code == 200
+    - $.resp_msg == 操作成功
+    - $.status == 200
+    - $.datas == 删除成功!
+
+
+- interfaceName: CRM系统_市场管理_发布资讯
+  function: 发布管理
+  systemName: CRM系统
+  level: critical
+  loop: 1
+  method: post
+  module: 市场管理
+  role: 销售
+  url: /api/crm-info/publish/online
+  body:
+  - '{{infoId_1}}'
+  save_key: ''
+  asserts:
+    - $.resp_code == 200
+    - $.resp_msg == 操作成功
+    - $.status == 200
+    - $.datas == 发布成功!
+
+- interfaceName: CRM系统_市场管理_复制资讯
+  function: 发布管理
+  systemName: CRM系统
+  level: critical
+  loop: 1
+  method: post
+  module: 市场管理
+  role: 销售
+  url: /api/crm-info/publish/duplicate
+  body:
+  - "1808392024693227580"
+  save_key: ''
+  asserts:
+    - $.resp_code == 200
+    - $.resp_msg == 操作成功
+    - $.status == 200
+    - $.datas == True
+
+- interfaceName: CRM系统_市场管理_查询复制资讯信息
+  function: 咨询查阅
+  systemName: CRM系统
+  level: critical
+  loop: 1
+  method: post
+  module: 市场管理
+  role: 销售
+  url: /api/crm-info/publish/list
+  body:
+    num: 1
+    size: 1
+    status: 0
+    title: 发布资讯{{datetimelist.datetimename}}
+    typeId: '{{typeid}}'
+  save_key: ''
+  asserts:
+    - $.resp_code == 200
+    - $.resp_msg == 操作成功
+    - $.status == 200
+    - $.datas[0].title == 发布资讯{{datetimelist.datetimename}}
+
+- interfaceName: CRM系统_客户管理_查询所有企业
+  function: 企业库
+  systemName: CRM系统
+  level: critical
+  loop: 1
+  method: post
+  module: 客户管理
+  role: 销售
+  url: /api/crm-customer/information/page-list
+  body:
+    num: 1
+    size: 1
+  save_key: ''
+  asserts:
+    - $.resp_code == 200
+    - $.resp_msg == 操作成功
+    - $.status == 200
+    - $.datas != None
+
+- interfaceName: CRM系统_客户管理_查询所有联系人
+  function: 客户联系人
+  systemName: CRM系统
+  level: critical
+  loop: 1
+  method: post
+  module: 客户管理
+  role: 销售
+  url: /api/crm-customer/customer-contacts/page-list
+  body:
+    num: 1
+    size: 20
+    status: -1
+  save_key: ''
+  asserts:
+    - $.resp_code == 200
+    - $.resp_msg == 操作成功
+    - $.status == 200
+    - $.datas != None
+
+- interfaceName: CRM系统_客户管理_查询所有客户建档
+  function: 客户建档
+  systemName: CRM系统
+  level: critical
+  loop: 1
+  method: post
+  module: 客户管理
+  role: 销售
+  url: /api/crm-customer/base-information/page-list
+  body:
+    endTime: ''
+    num: 1
+    size: 20
+    startTime: ''
+  save_key: ''
+  asserts:
+    - $.resp_code == 200
+    - $.resp_msg == 操作成功
+    - $.status == 200
+    - $.datas != None
+
+- interfaceName: CRM系统_线索管理_选择客户
+  module: 线索管理
+  function: 线索公海池
+  systemName: CRM系统
+  level: critical
+  role: 销售
+  loop: 1
+  url: /api/crm-customer/information/page-list
+  method: post
+  body: {"size":1,"num":1,"status":1}
+  #获取返回接口的值
+  save_key:
+    - $.datas[0].id = customerId
+    - $.datas[0].customerName = customerName
+  #将获取的值赋值给字典变量
+  asserts:
+    - $.resp_msg == 操作成功
+    - $.datas != None
+    - $.status == 200
+    - $.resp_code == 200
+
+- interfaceName: CRM系统_线索管理_添加客户联系人
+  module: 线索管理
+  function: 线索公海池
+  systemName: CRM系统
+  level: critical
+  role: 销售
+  loop: 1
+  url: /api/crm-customer/customer-contacts/save
+  method: post
+  body: {
+    "customerId" : "{{customerId}}",
+    "contactsName" : "刘军",
+    "contactsNameEn" : "junLiu",
+    "deptName" : "市场部",
+    "duties" : "市场经理",
+    "telephone1" : "1816570600",
+    "status" : 1,
+    "telephone2" : "19100001111",
+    "mail" : "2437375168@qq.com",
+    "fileNameIds" : [],
+    "responsiblePerson" : "{{xs_userName}}",
+    "orgName" : "欣智旺",
+    "weDeptNames" : "销售二部",
+    "orgId" : "{{xs_orgId}}",
+    "responsiblePersonId" : "{{xs_userId}}"
+}
+  #获取返回接口的值
+  save_key:
+    - $.datas = contactsId
+  #将获取的值赋值给字典变量
+  asserts:
+    - $.resp_msg == 操作成功
+    - $.datas != None
+    - $.status == 200
+    - $.resp_code == 200
+
+- interfaceName: CRM系统_线索管理_获取产品库ID
+  module: 线索管理
+  function: 线索公海池
+  systemName: CRM系统
+  level: critical
+  role: 销售
+  loop: 1
+  url: /api/crm-customer/product-version/list
+  method: post
+  body:  {"orgId":"{{xs_orgId}}","status":1}
+  #获取返回接口的值
+  save_key:
+    - $.datas[0].id = versionId
+  #将获取的值赋值给字典变量
+  asserts:
+    - $.resp_msg == 操作成功
+    - $.datas != None
+    - $.status == 200
+    - $.resp_code == 200
+
+
+- interfaceName: CRM系统_线索管理_新增产品库
+  module: 线索管理
+  function: 线索公海池
+  systemName: CRM系统
+  level: critical
+  role: 销售
+  loop: 1
+  url: /api/crm-customer/product-library/save
+  method: post
+  body: {
+    "orgName" : "欣智旺",
+    "customerName" : "{{customerName}}",
+    "productType" : "电池",
+    "productModel" : "CRM631566",
+    "priceRange" : "500",
+    "currency" : "RMB",
+    "salesArea" : "国内",
+    "saleMode" : "ODM",
+    "customerStatus" : "0",
+    "projectPlan" : "项目方案",
+    "orgId" : "{{xs_orgId}}",
+    "customerId" : "{{customerId}}",
+    "coreCompetitorReqList" : [
+        {
+            "coreCompetitor" : "电池",
+            "portion" : 56,
+            "saleChance" : 88,
+            "supplyName" : "索尼"
+        }
+    ],
+    "supplierReqList" : [],
+    "salePredictionReqList" : [],
+    "versionId" : "{{versionId}}"
+}
+  #获取返回接口的值
+  save_key:
+    - $.datas = productModelId
+  #将获取的值赋值给字典变量
+  asserts:
+    - $.resp_msg == 操作成功
+    - $.datas != None
+    - $.status == 200
+    - $.resp_code == 200
+
+
+- interfaceName: CRM系统_线索管理_获取客户联系人
+  function: 线索公海池
+  systemName: CRM系统
+  level: critical
+  loop: 1
+  method: post
+  module: 线索管理
+  role: 销售
+  url: /api/crm-customer/customer-contacts/page-list
+  body:
+    customerId: '{{customerId}}'
+    num: 1
+    size: 20
+  save_key:
+  - $.datas[0].id = contactsId
+  - $.datas[0].contactsName = contactsName
+  - $.datas[0].telephone1 = telephone1
+  - $.datas[0].mail = mail
+  asserts:
+    - $.resp_code == 200
+    - $.resp_msg == 操作成功
+    - $.status == 200
+    - $.datas != None
+
+- interfaceName: CRM系统_线索管理_保存线索
+  module: 线索管理
+  function: 线索公海池
+  systemName: CRM系统
+  level: critical
+  role: 销售
+  loop: 1
+  url: /api/crm-server/sales-clue/save
+  method: post
+  body: {
+      "orgId" : "{{xs_orgId}}",
+      "deptId" : "{{xs_deptId}}",
+      "customName" : "{{customerName}}",
+      "clueName" : "新建{{customerName}}项目",
+      "ouId" :  ["1699717342419353633","1699717342423547978","1699717342494851151"],
+      "clueSources" : "3",
+      "marketingActivityName" : "0509-001",
+      "terminalCustomerId" : "{{customerId}}",
+      "contactName" : "{{contactsName}}",
+      "telephone1" : "{{telephone1}}",
+      "telephone2" : "19100001111",
+      "contactMail" : "{{mail}}",
+      "productModelName" : "CRM631566",
+      "projectStatus" : "0",
+      "consultationMatter" : "咨询量产事宜",
+      "customId" : "{{customerId}}",
+      "marketingActivityId" : "1788374063511805958",
+      "contactId" : "{{contactsId}}",
+      "productModelId" : "{{productModelId}}",
+      "referenceProjectId" : "1805076256049053731",
+      "productType" : "1765280012667367499",
+      "productSubclassId" : "1765280012679950436",
+      "companyProductModel" : "CRM00013245",
+      "outputDate" : "{{datetimelist.date_tomorrow}}",
+      "eolDate" : "{{datetimelist.date_tomorrow}}",
+      "lifeCycle" : "120",
+      "remark" : "产量巨大",
+      "productionAddressId" : "1800828089994219594",
+      "ouList" :   ["1699717342419353633","1699717342423547978","1699717342494851151"],
+      "terminalCustomerName" : "{{customerName}}"
+  }
+  #获取返回接口的值
+  save_key:
+    - $.datas = clueId
+  #将获取的值赋值给字典变量
+  asserts:
+    - $.resp_msg == 操作成功
+    - $.datas != None
+    - $.status == 200
+    - $.resp_code == 200
+
+- interfaceName: CRM系统_线索管理_领取线索
+  function: 线索公海池
+  systemName: CRM系统
+  level: critical
+  loop: 1
+  method: post
+  module: 线索管理
+  role: 销售
+  url: /api/crm-server/sales-clue/receive-clue
+  body:
+  - '{{clueId}}'
+  save_key: ''
+  asserts:
+    - $.resp_code == 200
+    - $.resp_msg == 操作成功
+    - $.status == 200
+    - $.datas != None
+
+- interfaceName: CRM系统_线索管理_添加跟进记录
+  function: 线索公海池
+  systemName: CRM系统
+  level: critical
+  loop: 1
+  method: post
+  module: 线索管理
+  role: 销售
+  url: /api/crm-server/follow/save
+  body:
+    businessId: '{{clueId}}'
+    contents: 与{{customerName}}客户商谈量产事宜
+    recordType: followUpType
+    sourceType: clue
+    type: customerVisit
+  save_key: ''
+  asserts:
+    - $.resp_code == 200
+    - $.resp_msg == 操作成功
+    - $.status == 200
+    - $.datas != None
+
+- interfaceName: CRM系统_线索管理_添加跟进任务
+  function: 线索公海池
+  systemName: CRM系统
+  level: critical
+  loop: 1
+  method: post
+  module: 线索管理
+  role: 销售
+  url: /api/crm-server/task/save
+  body:
+    businessId: '{{clueId}}'
+    customerProblem: 工厂设备老化，技术落后，人力不足
+    endTime: '{{datetimelist.date_tomorrow}} 17:30:00'
+    name: 与{{customerName}}客户商谈量产事宜
+    parentId: 0
+    priority: notUrgentNotImportant
+    remind: oneWeek
+    stage: ''
+    taskManagerDeptId: '{{deptId}}'
+    taskManagerId: '{{userId}}'
+    type: clue
+  save_key: ''
+  asserts:
+    - $.resp_code == 200
+    - $.resp_msg == 操作成功
+    - $.status == 200
+    - $.datas != None
+
+
+- interfaceName: CRM系统_线索管理_释放公海池
+  function: 销售线索
+  systemName: CRM系统
+  level: critical
+  loop: 1
+  method: post
+  module: 线索管理
+  role: 销售
+  url: /api/crm-server/sales-clue/free
+  body:
+  - '{{clueId}}'
+  save_key: ''
+  asserts:
+    - $.resp_code == 200
+    - $.resp_msg == 操作成功
+    - $.status == 200
+    - $.datas != None
+
+- interfaceName: CRM系统_线索管理_再次领取线索
+  function: 线索公海池
+  systemName: CRM系统
+  level: critical
+  loop: 1
+  method: post
+  module: 线索管理
+  role: 销售
+  url: /api/crm-server/sales-clue/receive-clue
+  body:
+  - '{{clueId}}'
+  save_key: ''
+  asserts:
+    - $.resp_code == 200
+    - $.resp_msg == 操作成功
+    - $.status == 200
+    - $.datas != None
+
+- interfaceName: CRM系统_线索管理_线索失效
+  function: 线索公海池
+  systemName: CRM系统
+  level: critical
+  loop: 1
+  method: post
+  module: 线索管理
+  role: 销售
+  url: /api/crm-server/sales-clue/failure
+  body:
+    failureReason: 无效销售线索
+    id: '{{clueId}}'
+  save_key: ''
+  asserts:
+    - $.resp_code == 200
+    - $.resp_msg == 操作成功
+    - $.status == 200
+    - $.datas != None
+
+
+
